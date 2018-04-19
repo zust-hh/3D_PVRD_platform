@@ -1,0 +1,15 @@
+{
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx71f0437822bcbbe4",
+	"projectname": "3d_pvrd_platform",
+	"miniprogramRoot": "./dist",
+	"condition": {}
+}
