@@ -123,10 +123,37 @@ export default class PioneerDetail extends wepy.page {
             replyId: 0,
             replyFirst: '七天假', //发表回复的人
             replySecond: 'Zust_hh', //被回复的对象
-            replyCotent: '这家公司不错的！！',
-          }
+            replyContent: '这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！',
+          },
+          {
+            replyId: 1,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！',
+          },
         ]
-      }
+      },
+      {
+        id: 1,
+        avatar: '../images/test.png',
+        publisher: 'Zust_hh', // 发表评论的人
+        releaseTime: '2018-04-20', // 发表时间
+        commentContent: '这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！',
+        replyList: [
+          {
+            replyId: 0,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！',
+          },
+          {
+            replyId: 1,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！',
+          },
+        ]
+      },
     ]
   };
   methods = {

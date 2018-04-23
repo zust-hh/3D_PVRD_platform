@@ -21,21 +21,29 @@
 }
 .publisher {
   margin-left: 5px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 24px;
   float: left;
 }
 .releaseTime {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 200;
   line-height: 24px;
   float: right;
 }
 .commentContent {
   margin-left: 26px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 200;
   width: 100%;
+}
+.one-comment-replyList {
+  margin-top: 10px;
+  font-size: 11px;
+  margin-left: 26px;
+}
+.one-reply {
+  margin-bottom: 10px;
 }
 </style>
 <template>
@@ -49,7 +57,11 @@
       <text class="commentContent">{{commentContent}}</text>
     </view>
     <view class="one-comment-replyList">
-
+      <repeat for="{{replyList}}" key="index" index="index" item="item">
+        <view class="one-reply">
+          <text>{{item.replyFirst}}@{{item.replySecond}}：{{item.replyContent}}</text>
+        </view>
+      </repeat>
     </view>
   </view>
 </template>
