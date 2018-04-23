@@ -1,4 +1,9 @@
 <style lang="less">
+page {
+  width: 100%;
+  height: 100%;
+  background-color: #2d2d2d;
+}
 .container {
   height: 100%;
   display: flex;
@@ -10,60 +15,90 @@
 </style>
 
 <script>
-import wepy from 'wepy'
-import 'wepy-async-function'
-
+import wepy from "wepy";
+import "wepy-async-function";
 
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
-    ],
+      "pages/pioneer",
+      "pages/threeD",
+      "pages/investment",
+      "pages/user",
+      "pages/pioneerDetail",
+      ],
     window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    }
-  }
+      navigationBarTextStyle: "white",
+      navigationStyle: "custom",
+      backgroundColor: "#2d2d2d",
+      backgroundTextStyle: "dark"
+    },
+    tabBar: {
+    color: "#cdcdcd",
+    selectedColor: "white",
+    borderStyle: "white",
+    backgroundColor: "#2d2d2d",
+    list: [{
+      pagePath: "pages/pioneer",
+      iconPath: "images/iconfont-home.png",
+      selectedIconPath: "images/iconfont-home-active.png",
+      text: "找创业"
+    }, {
+      pagePath: "pages/investment",
+      iconPath: "images/iconfont-list.png",
+      selectedIconPath: "images/iconfont-list-active.png",
+      text: "寻投资"
+    }, {
+      pagePath: "pages/threeD",
+      iconPath: "images/iconfont-cart.png",
+      selectedIconPath: "images/iconfont-cart-active.png",
+      text: "聊一聊"
+    }, {
+      pagePath: "pages/user",
+      iconPath: "images/iconfont-user.png",
+      selectedIconPath: "images/iconfont-user-active.png",
+      text: "我的"
+    }]
+  },
+  };
 
   globalData = {
     userInfo: null
-  }
+  };
 
-  constructor () {
-    super()
-    this.use('requestfix')
+  constructor() {
+    super();
+    this.use("requestfix");
   }
 
   onLaunch() {
-    this.testAsync()
+    this.testAsync();
   }
 
-  sleep (s) {
+  sleep(s) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
+        resolve("promise resolved");
+      }, s * 1000);
+    });
   }
 
-  async testAsync () {
-    const data = await this.sleep(3)
-    console.log(data)
+  async testAsync() {
+    const data = await this.sleep(3);
+    console.log(data);
   }
 
   getUserInfo(cb) {
-    const that = this
+    const that = this;
     if (this.globalData.userInfo) {
-      return this.globalData.userInfo
+      return this.globalData.userInfo;
     }
     wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
+      success(res) {
+        that.globalData.userInfo = res.userInfo;
+        cb && cb(res.userInfo);
       }
-    })
+    });
   }
 }
 </script>

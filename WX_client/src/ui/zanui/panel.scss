@@ -5,12 +5,6 @@
   background: #fff;
   margin-top: 10px;
   overflow: hidden;
-
-  &::after {
-    @include hairline;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-  }
 }
 
 .zan-panel-title {

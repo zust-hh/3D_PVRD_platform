@@ -1,0 +1,61 @@
+<style lang="scss">
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+</style>
+<template>
+  <scroll-view scroll-y style="height:100%">
+    <repeat for="{{list}}" key="index" index="index" item="item">
+        <OneCard :id="item.id" :backgroundImage="item.backgroundImage" :companyName="item.companyName" :involvingIndustry="item.involvingIndustry" />
+    </repeat>
+  </scroll-view>
+</template>
+
+<script>
+import wepy from "wepy";
+import OneCard from '../components/oneCard'
+
+export default class Pioneer extends wepy.page {
+  components = {
+    OneCard,
+  };
+  data = {
+    list: [
+      {
+        id: 0,
+        backgroundImage: '../images/test.png',
+        companyName: '3D创业公司',
+        involvingIndustry: '金融/商务',
+      },
+      {
+        id: 1,
+        backgroundImage: '../images/test.png',
+        companyName: '3D创业公司',
+        involvingIndustry: '金融/商务',
+      },
+    ]
+  };
+  methods = {
+    
+  };
+  events = {
+    zanTabChange({ selectedId }, event) {
+      let { componentId } = event.source;
+      console.log("Page Tab receive selectedId:", componentId, selectedId);
+      // 此处进行业务逻辑处理...
+    }
+  };
+}
+</script>
