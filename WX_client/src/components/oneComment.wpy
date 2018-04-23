@@ -1,0 +1,82 @@
+<style lang="scss">
+.one-comment {
+  width: calc(90% - 40px);
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #515151;
+  padding: 5px 10px;
+}
+.one-comment text {
+  color: white;
+}
+.one-comment-head {
+  height: 24px;
+}
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  float: left;
+}
+.publisher {
+  margin-left: 5px;
+  font-size: 14px;
+  line-height: 24px;
+  float: left;
+}
+.releaseTime {
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 24px;
+  float: right;
+}
+.commentContent {
+  margin-left: 26px;
+  font-size: 14px;
+  font-weight: 200;
+  width: 100%;
+}
+</style>
+<template>
+  <view class="one-comment">
+    <view class="one-comment-head">
+      <image class="avatar" src="{{avatar}}"></image>
+      <text class="publisher">{{publisher}}</text>
+      <text class="releaseTime">{{releaseTime}}</text>
+    </view>
+    <view class="one-comment-content">
+      <text class="commentContent">{{commentContent}}</text>
+    </view>
+    <view class="one-comment-replyList">
+
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class OneComment extends wepy.component {
+    props = {
+      id: Number,
+      avatar: String,
+      publisher: String,
+      releaseTime: String,
+      commentContent: String,
+      replyList: Array,
+    }
+
+    data = {
+    }
+    events = {
+    }
+
+    watch = {
+    }
+
+    methods = {
+    }
+    onLoad () {
+    }
+  }
+</script>

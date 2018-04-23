@@ -8,7 +8,7 @@
 .bacImg {
   height: 200px;
   width: 100%;
-  position: absolute;
+  position: relative;
 }
 .backBtn {
   margin-top: 30px;
@@ -23,7 +23,6 @@
 }
 .detail {
   width: 100%;
-  margin-top: 200px;
   padding: 10px 15px;
 }
 .zan-panel {
@@ -46,6 +45,9 @@
   width: 100%;
   padding: 10px 15px;
 }
+.comment-head {
+  margin-bottom: 10px;
+}
 .comment-head-top {
   font-size: 14px;
   color: white;
@@ -60,7 +62,7 @@
 }
 </style>
 <template>
-  <view class="container">
+  <scroll-view scroll-y class="container">
     <image class="bacImg" src="../images/test.png"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
@@ -88,21 +90,44 @@
             <text class="comment-head-bottom">有{{commentNum}}条评论</text>
           </view>
         </view>
+        <repeat for="{{commentList}}" key="index" index="index" item="item">
+          <OneComment :id="item.id" :avatar="item.avatar" :publisher="item.publisher" :releaseTime="item.releaseTime" :commentContent="item.commentContent" :replyList="item.replyList" />
+        </repeat>
       </view>
     </view>
-  </view>
+  </scroll-view>
 </template>
 
 <script>
 import wepy from "wepy";
+import OneComment from '../components/oneComment'
 
 export default class PioneerDetail extends wepy.page {
-  components = {};
+  components = {
+    OneComment,
+  };
   data = {
     companyName: '3D创业公司',
     companyCEO: '王国庆',
     companyProfile: '这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！',
     commentNum: 3,
+    commentList: [
+      {
+        id: 0,
+        avatar: '../images/test.png',
+        publisher: 'Zust_hh', // 发表评论的人
+        releaseTime: '2018-04-20', // 发表时间
+        commentContent: '这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！',
+        replyList: [
+          {
+            replyId: 0,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyCotent: '这家公司不错的！！',
+          }
+        ]
+      }
+    ]
   };
   methods = {
     goBack() {
