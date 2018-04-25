@@ -43,10 +43,11 @@
   }
 </style>
 <template>
-  <view class="card" @tap="show({{id}})">
+  <view class="card" @tap="show({{id}}, {{type}})">
     <view class="mask"></view>
     <image class="bacImg" src="{{backgroundImage}}"></image>
-    <text class="companyName">{{companyName}}</text>
+    <text wx:if="{{type === 'pioneer'}}" class="companyName">{{companyName}}</text>
+    <text wx:if="{{type === 'investment'}}" class="companyName">投资行：{{companyName}}</text>
     <text class="involvingIndustry">{{involvingIndustry}}</text>
   </view>
 </template>
@@ -55,6 +56,7 @@
 
   export default class OneCard extends wepy.component {
     props = {
+      type: String,
       id: Number,
       backgroundImage: String,
       companyName: String,
@@ -70,8 +72,11 @@
     }
 
     methods = {
-      show (id) {
-        const url = `../pages/pioneerDetail?id=${id}`;
+      show (id, type) {
+        let url = '';
+        type === 'pioneer' ? 
+          url = `../pages/pioneerDetail?id=${id}` :
+          url = `../pages/investmentDetail?id=${id}`;
         wx.navigateTo({
           url: url
         })

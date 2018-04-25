@@ -1,0 +1,103 @@
+<style lang="scss">
+@import "../ui/zanui/icon.scss";
+@import '../ui/zanui/panel.scss';
+.backBtn {
+  margin-top: 30px;
+  color: white;
+  z-index: 1;
+  position: fixed;
+  left: 20px;
+  transform: rotate(180deg);
+}
+.backBtn:hover {
+  color: #f3f3f3;
+}
+.container {
+  padding: 60px 15px 20px 15px;
+}
+.zan-panel {
+  width: 100%;
+  background-color: #cdcdcd;
+}
+.zan-field {
+  background-color: #2d2d2d;
+}
+.zan-field__title {
+  font-size: 12px;
+  color: white;
+}
+.zan-field__input {
+  color: white;
+  background-color: #333333;
+  padding-left: 5px;
+}
+textarea {
+  background-color: #333333;
+  padding: 5px 8px;
+  min-height: 150px;
+}
+.apply-btn {
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  width: 50%;
+  background-color: #f55a5d;
+  color: white;
+  margin-top: 30px;
+}
+</style>
+<template>
+  <scroll-view scroll-y >
+    <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
+    <view class="container">
+      <view class="zan-panel">
+        <zanField1 :options="companyName" :value="value" componentId="zanField1" ></zanField1>
+      </view>
+      <view class="zan-panel">
+        <zanField2 :options="companyCEO" :value="value" componentId="zanField2" ></zanField2>
+      </view>
+      <view class="zan-panel">
+        <zanField3 :options="companyPro" :value="value" componentId="zanField3" ></zanField3>
+      </view>
+      <view class="zan-panel-title">公司简介</view>
+      <view class="zan-panel">
+        <textarea auto-height />
+      </view>
+      <button class="apply-btn">确认申请</button>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+import wepy from "wepy";
+import zanField from '../ui/components/zan-field';
+
+export default class ApplyDetail extends wepy.page {
+  components = {
+    zanField1: zanField,
+    zanField2: zanField,
+    zanField3: zanField,
+  };
+  data = {
+    companyName: {
+      title: '公司名称：',
+    },
+    companyCEO: {
+      title: '公司CEO：',
+    },
+    companyPro: {
+      title: '公司产品：',
+    },
+    value: 'test',
+    textareaValue: 'test textarea',
+  };
+  methods = {
+    goBack() {
+      wx.navigateBack({
+        delta: 1
+      });
+    },
+  }
+  events = {};
+}
+</script>

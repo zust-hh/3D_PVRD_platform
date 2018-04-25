@@ -1,10 +1,7 @@
 <style lang="scss">
-
 </style>
 <template>
-<view>
-  ceshi1
-  </view>
+  <web-view src="https://threejs.org/examples/css3d_panorama.html"></web-view>
 </template>
 
 <script>
@@ -12,6 +9,8 @@ import wepy from "wepy";
 export default class threeD extends wepy.page {
   components = {};
   data = {};
+  methods = {
+  }
   events = {};
 }
 </script>

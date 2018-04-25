@@ -1,0 +1,114 @@
+<style lang="scss">
+@import "../ui/zanui/icon.scss";
+@import "../ui/zanui/panel.scss";
+@import "../ui/zanui/cell.scss";
+.container {
+  position: relative;
+}
+.bacImg {
+  height: 200px;
+  width: 100%;
+  position: relative;
+}
+.backBtn {
+  margin-top: 30px;
+  color: white;
+  z-index: 1;
+  position: fixed;
+  left: 20px;
+  transform: rotate(180deg);
+}
+.backBtn:hover {
+  color: #f3f3f3;
+}
+.detail {
+  width: 100%;
+  padding: 10px 15px;
+}
+.zan-panel {
+  width: 100%;
+  background-color: #2d2d2d;
+}
+.zan-cell {
+  padding: 8px 15px;
+  border: 1px solid #2d2d2d;
+}
+.zan-cell__bd {
+  font-size: 12px;
+  color: white;
+  margin-top: 10px;
+}
+.zan-cell__bd text {
+  font-size: 10px;
+}
+.apply-btn {
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  width: 50%;
+  background-color: #f55a5d;
+  color: white;
+  margin-top: 30px;
+}
+</style>
+<template>
+  <scroll-view scroll-y class="container">
+    <image class="bacImg" src="../images/test.png" @tap="show"></image>
+    <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
+    <view class="detail">
+      <view class="zan-panel">
+        <view class="zan-cell">
+          <view class="zan-cell__bd">投资机构名称：
+            <text>{{companyName}}</text>
+          </view>
+        </view>
+        <view class="zan-cell">
+          <view class="zan-cell__bd">投资机构CEO：
+            <text>{{companyCEO}}</text>
+          </view>
+        </view>
+        <view class="zan-cell">
+          <view class="zan-cell__bd">投资机构简介：
+            <text>{{companyProfile}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <button class="apply-btn" @tap="apply">申请投资</button>
+  </scroll-view>
+</template>
+
+<script>
+import wepy from "wepy";
+
+export default class InvestmentDetail extends wepy.page {
+  components = {
+  };
+  data = {
+    companyName: '3D创业公司',
+    companyCEO: '王国庆',
+    companyProfile: '这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！',
+  };
+  methods = {
+    goBack() {
+      wx.navigateBack({
+        delta: 1
+      });
+    },
+    show() {
+      wx.navigateTo({
+        url: './threeD'
+      })
+    },
+    apply() {
+      wx.navigateTo({
+        url: './applyDetail'
+      })
+    }
+  };
+  events = {};
+  onLoad(option) {
+    console.log(option);
+  }
+}
+</script>

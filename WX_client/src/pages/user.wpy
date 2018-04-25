@@ -1,10 +1,13 @@
 <style lang="scss">
+@import "../ui/zanui/icon.scss";
 .userinfo {
 	display: flex;
 	flex-direction: column;
-	padding: 50rpx 0;
 	align-items: center;
-	background: #479de6;
+	width: 100%;
+	padding-top: 80px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #f55a5d;
 }
 
 .userinfo-avatar {
@@ -17,69 +20,51 @@
 .userinfo-nickname {
 	color: #fff;
 }
-
-.badge {
-	width: 15px;
-	height: 15px;
-	line-height: 15px;
-	background: #ff0000;
-	color: #fff;
-	border-radius: 50%;
-	text-align: center;
-	font-size: 8px;
-}
-
-.logout {
-	position: relative;
-	margin-top: 1.17647059em;
-	line-height: 1.41176471;
-	font-size: 17px;
-	padding: 10px 15px;
-	background: #fff;
-	text-align: center;
-}
-
-.logout:before {
-	content: " ";
+.info_list {
+	width: 100%;
 	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	height: 1px;
-	border-top: 1rpx solid #D9D9D9;
-	color: #D9D9D9;
+	top: 196px;
+	color: white;
 }
-
-.logout:after {
-	content: " ";
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	height: 1px;
-	border-bottom: 1rpx solid #D9D9D9;
-	color: #D9D9D9;
+.info_list view {
+	padding-left: 20px;
+	padding-right: 10px;
+	line-height: 40px;
+	height: 40px;
+	border-bottom: 1px solid #f55a5d;
+}
+.info_list text {
+	font-size: 12px;
+}
+.backBtn {
+	float: right;
 }
 </style>
 <template>
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-</view>
-  <!-- <view class="container">
+  <view class="container">
     <view bindtap="bindViewTap" class="userinfo">
       <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image>
       <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
     </view>
     <view class="info_list">
+			<view class="">
+				<text>我的公司</text>
+				<view class="backBtn zan-icon zan-icon-arrow"></view>
+			</view>
+			<view>
+				<text>消息</text>
+				<view class="backBtn zan-icon zan-icon-arrow"></view>
+			</view>
+			<view>
+				<text>申请</text>
+				<view class="backBtn zan-icon zan-icon-arrow"></view>
+			</view>
+			<view>
+				<text>关于我们</text>
+				<view class="backBtn zan-icon zan-icon-arrow"></view>
+			</view>
     </view>
-    <view class="logout" bindtap="logout">登出账号</view>
-  </view> -->
+  </view>
 </template>
 
 <script>
@@ -89,10 +74,19 @@ export default class User extends wepy.page {
   data = {
     userInfo: {},
   };
-  events = {};
+	events = {};
   onLoad() {
-		this.getUserInfo()
-		this.getStorageInfo()
+		if (this.$parent.globalData.userInfo) {
+      this.userInfo = this.$parent.globalData.userInfo;
+    } else {
+			wx.getUserInfo({
+        success: res => {
+          this.$parent.globalData.userInfo = res.userInfo;
+          this.userInfo = res.userInfo;
+					this.$apply();
+        }
+      })
+		}
   }
 }
 </script>

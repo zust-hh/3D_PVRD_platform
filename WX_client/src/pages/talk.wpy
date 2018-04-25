@@ -1,0 +1,101 @@
+<style lang="scss">
+@import "../ui/zanui/icon.scss";
+.container {
+  position: relative;
+}
+.bacImg {
+  height: 200px;
+  width: 100%;
+  position: relative;
+}
+.avatar {
+  width: 56px;
+  height: 56px;
+  position: absolute;
+  right: 20px;
+  top: 160px;
+  border: 2px solid white;
+}
+.talk-detail {
+  width: 100%;
+  margin-top: -5px;
+  padding-top: 30px;
+  background-color: white;
+}
+</style>
+<template>
+  <scroll-view scroll-y  class="container">
+    <image class="bacImg" src="../images/test.png"></image>
+    <image class="avatar" src="../images/avatar.png"></image>
+    <view class="talk-detail">
+      <repeat for="{{commentList}}" key="index" index="index" item="item">
+        <OneTalk :id="item.id" :avatar="item.avatar" :publisher="item.publisher" :releaseTime="item.releaseTime" :talkContent="item.talkContent" :replyList="item.replyList" />
+      </repeat>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+import wepy from "wepy";
+import OneTalk from '../components/oneTalk'
+
+export default class Talk extends wepy.page {
+  components = {
+    OneTalk,
+  };
+  data = {
+    commentList: [
+      {
+        id: 0,
+        avatar: '../images/test.png',
+        publisher: 'Zust_hh', // 发表评论的人
+        releaseTime: '2018-04-20', // 发表时间
+        talkContent: '这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！',
+        replyList: [
+          {
+            replyId: 0,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！',
+          },
+          {
+            replyId: 1,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！',
+          },
+        ]
+      },
+      {
+        id: 1,
+        avatar: '../images/test.png',
+        publisher: 'Zust_hh', // 发表评论的人
+        releaseTime: '2018-04-20', // 发表时间
+        talkContent: '这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！',
+        replyList: [
+          {
+            replyId: 0,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！',
+          },
+          {
+            replyId: 1,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！',
+          },
+        ]
+      },
+    ]
+  };
+  events = {};
+  methods = {
+     goBack() {
+      wx.navigateBack({
+        delta: 1
+      });
+    },
+  }
+}
+</script>

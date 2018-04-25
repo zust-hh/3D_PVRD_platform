@@ -14,7 +14,7 @@
   margin-top: 30px;
   color: white;
   z-index: 1;
-  position: absolute;
+  position: fixed;
   left: 20px;
   transform: rotate(180deg);
 }
@@ -63,7 +63,7 @@
 </style>
 <template>
   <scroll-view scroll-y class="container">
-    <image class="bacImg" src="../images/test.png"></image>
+    <image class="bacImg" src="../images/test.png" @tap="show"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
       <view class="zan-panel">
@@ -161,6 +161,11 @@ export default class PioneerDetail extends wepy.page {
       wx.navigateBack({
         delta: 1
       });
+    },
+    show() {
+      wx.navigateTo({
+        url: './threeD'
+      })
     }
   };
   events = {};

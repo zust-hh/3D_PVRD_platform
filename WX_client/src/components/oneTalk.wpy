@@ -1,0 +1,95 @@
+<style lang="scss">
+.one-talk {
+  width: calc(100% - 20px);
+  background-color: white;
+  padding: 8px 10px;
+  border-bottom: 1px solid #dedede;
+  display: flex;
+}
+.one-talk text {
+  color: #353535;
+}
+.one-talk-left {
+  width: 40px;
+  margin-right: 5px;
+}
+.talkAvatar {
+  width: 30px;
+  height: 30px;
+}
+.publisher {
+  margin-left: 5px;
+  font-size: 14px;
+  color: #586c94 !important;
+}
+.releaseTime {
+  font-size: 12px;
+  font-weight: 200;
+  line-height: 24px;
+}
+.talkContent {
+  font-size: 12px;
+  width: 100%;
+}
+.one-talk-replyList {
+  margin-top: 10px;
+  font-size: 11px;
+}
+.one-reply {
+  padding: 3px 3px;
+  background-color: #eee;
+  border-bottom: 1px solid #dedede;
+}
+</style>
+<template>
+  <view class="one-talk">
+    <view class="one-talk-left">
+      <image class="talkAvatar" src="{{avatar}}"></image>
+    </view>
+    <view class="one-talk-right">
+      <view class="one-talk-detail">
+        <text class="publisher">{{publisher}}</text>
+        <view class="one-talk-content">
+          <text class="talkContent">{{talkContent}}</text>
+        </view>
+        <view>
+          <text class="releaseTime">{{releaseTime}}</text>
+        </view>
+      </view>
+      <view class="one-talk-replyList">
+        <repeat for="{{replyList}}" key="index" index="index" item="item">
+          <view class="one-reply">
+            <text>{{item.replyFirst}}@{{item.replySecond}}：{{item.replyContent}}</text>
+          </view>
+        </repeat>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class OneTalk extends wepy.component {
+    props = {
+      id: Number,
+      avatar: String,
+      publisher: String,
+      releaseTime: String,
+      talkContent: String,
+      replyList: Array,
+    }
+
+    data = {
+    }
+    events = {
+    }
+
+    watch = {
+    }
+
+    methods = {
+    }
+    onLoad () {
+    }
+  }
+</script>

@@ -1,17 +1,42 @@
 <style lang="scss">
-
 </style>
 <template>
-<view>
-  ceshi3
-  </view>
+  <scroll-view scroll-y style="height:100%">
+    <repeat for="{{list}}" key="index" index="index" item="item">
+        <OneCard :type="type" :id="item.id" :backgroundImage="item.backgroundImage" :companyName="item.companyName" :involvingIndustry="item.involvingIndustry" />
+    </repeat>
+  </scroll-view>
 </template>
 
 <script>
 import wepy from "wepy";
+import OneCard from '../components/oneCard'
+
 export default class Investment extends wepy.page {
-  components = {};
-  data = {};
-  events = {};
+  components = {
+    OneCard,
+  };
+  data = {
+    type: 'investment',
+    list: [
+      {
+        id: 0,
+        backgroundImage: '../images/test.png',
+        companyName: '3D创业公司',
+        involvingIndustry: '金融/商务',
+      },
+      {
+        id: 1,
+        backgroundImage: '../images/test.png',
+        companyName: '3D创业公司',
+        involvingIndustry: '金融/商务',
+      },
+    ]
+  };
+  methods = {
+    
+  };
+  events = {
+  };
 }
 </script>
