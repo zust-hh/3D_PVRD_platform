@@ -47,7 +47,7 @@
 }
 </style>
 <template>
-  <view class="one-comment">
+  <view class="one-comment" @tap="inputFocus({{publisher}})">
     <view class="one-comment-head">
       <image class="avatar" src="{{avatar}}"></image>
       <text class="publisher">{{publisher}}</text>
@@ -58,7 +58,7 @@
     </view>
     <view class="one-comment-replyList">
       <repeat for="{{replyList}}" key="index" index="index" item="item">
-        <view class="one-reply">
+        <view class="one-reply" catchtap="inputFocus({{item.replyFirst}})">
           <text>{{item.replyFirst}}@{{item.replySecond}}：{{item.replyContent}}</text>
         </view>
       </repeat>
@@ -87,6 +87,9 @@
     }
 
     methods = {
+      inputFocus(publisher) {
+        this.$emit('inputFocus', publisher);
+      }
     }
     onLoad () {
     }

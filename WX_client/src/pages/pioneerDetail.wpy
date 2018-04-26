@@ -4,6 +4,7 @@
 @import "../ui/zanui/cell.scss";
 .container {
   position: relative;
+  transform: scale3d(1, 1, 1);
 }
 .bacImg {
   height: 200px;
@@ -60,6 +61,43 @@
   color: #cdcdcd;
   font-weight: 200;
 }
+.commentInput {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 30px;
+  padding: 5px 0;
+  border-top: 1px solid white;
+  background-color: #2d2d2d;
+}
+.commentInput view {
+  width: calc(100%-40px);
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #515151;
+  display: flex;
+  border-radius: 5px; 
+}
+.commentInput input {
+  flex: 1;
+  margin-left: 20px;
+  background-color: #515151;
+  font-size: 12px;
+}
+.commentInput button {
+  position: static;
+  border: 0;
+  background-color: #515151;
+  color: white;
+  margin-left: 10px;
+  width: 50px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+  padding-left: 0;
+  padding-right: 0;
+}
 </style>
 <template>
   <scroll-view scroll-y class="container">
@@ -95,6 +133,12 @@
         </repeat>
       </view>
     </view>
+    <view class="commentInput">
+      <view>
+        <input placeholder="{{placeholder}}" focus="{{focus}}" bindblur="bindBlur" />
+        <button @tap="sendComment">发送</button>
+      </view>
+    </view>
   </scroll-view>
 </template>
 
@@ -107,6 +151,8 @@ export default class PioneerDetail extends wepy.page {
     OneComment,
   };
   data = {
+    focus: false,
+    placeholder: '输入评论',
     companyName: '3D创业公司',
     companyCEO: '王国庆',
     companyProfile: '这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！',
@@ -166,9 +212,22 @@ export default class PioneerDetail extends wepy.page {
       wx.navigateTo({
         url: './threeD'
       })
+    },
+    bindBlur() {
+      this.placeholder = "输入评论";
+      this.focus = false;
+    },
+    sendComment() {
+      console.log('发送');
     }
   };
-  events = {};
+  events = {
+    inputFocus(publisher) {
+      console.log(publisher);
+      this.placeholder = `回复${publisher}：`;
+      this.focus = true;
+    }
+  };
   onLoad(option) {
     console.log(option);
   }

@@ -22,6 +22,50 @@
   padding-top: 30px;
   background-color: white;
 }
+.talk-button {
+  font-size: 40px;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  color: #f55a5d;
+}
+.talkInput {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 30px;
+  padding: 5px 0;
+  border-top: 1px solid white;
+  background-color: #2d2d2d;
+}
+.talkInput view {
+  width: calc(100%-40px);
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #515151;
+  display: flex;
+  border-radius: 5px; 
+}
+.talkInput input {
+  flex: 1;
+  margin-left: 20px;
+  background-color: #515151;
+  font-size: 12px;
+}
+.talkInput button {
+  position: static;
+  border: 0;
+  background-color: #515151;
+  color: white;
+  margin-left: 10px;
+  width: 50px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+  padding-left: 0;
+  padding-right: 0;
+}
 </style>
 <template>
   <scroll-view scroll-y  class="container">
@@ -31,6 +75,13 @@
       <repeat for="{{commentList}}" key="index" index="index" item="item">
         <OneTalk :id="item.id" :avatar="item.avatar" :publisher="item.publisher" :releaseTime="item.releaseTime" :talkContent="item.talkContent" :replyList="item.replyList" />
       </repeat>
+    </view>
+    <view class="talk-button zan-icon zan-icon-add" @tap="showWriteHandle"></view>
+    <view class="talkInput" wx:if="{{showWrite === true}}">
+      <view>
+        <input placeholder="{{placeholder}}" focus="{{showWrite}}" bindblur="bindBlur" />
+        <button @tap="sendTalk">发送</button>
+      </view>
     </view>
   </scroll-view>
 </template>
@@ -44,6 +95,7 @@ export default class Talk extends wepy.page {
     OneTalk,
   };
   data = {
+    showWrite: false,
     commentList: [
       {
         id: 0,
@@ -96,6 +148,12 @@ export default class Talk extends wepy.page {
         delta: 1
       });
     },
+    showWriteHandle() {
+      this.showWrite = true;
+    },
+    bindBlur() {
+      this.showWrite = false;
+    }
   }
 }
 </script>
