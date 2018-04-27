@@ -29,6 +29,7 @@ export default class extends wepy.app {
       "pages/talk",
       "pages/investmentDetail",
       "pages/applyDetail",
+      "pages/applicationList",
       ],
     window: {
       navigationBarTextStyle: "white",

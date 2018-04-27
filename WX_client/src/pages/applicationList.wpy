@@ -1,0 +1,63 @@
+<style lang="scss">
+@import "../ui/zanui/icon.scss";
+.backBtn {
+  margin-top: 30px;
+  color: white;
+  z-index: 1;
+  position: fixed;
+  left: 20px;
+  transform: rotate(180deg);
+}
+.backBtn:hover {
+  color: #f3f3f3;
+}
+.one-application {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #cdcdcd;
+  border-radius: 5px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+}
+</style>
+<template>
+  <scroll-view scroll-y style="height:100%;">
+    <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
+    <view style="width: 100%;position: absolute;margin-top: 60px;">
+      <repeat for="{{applicationList}}" key="index" index="index" item="item">
+        <view class="one-application">
+          <p>{{item}}</p>
+        </view>
+      </repeat>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+import wepy from "wepy";
+import OneCard from '../components/oneCard'
+
+export default class ApplicationList extends wepy.page {
+  components = {
+    OneCard,
+  };
+  data = {
+    type: 'pioneer',
+    applicationList: [
+      'XXX已接受了您的投资申请！',
+      'XXX已拒绝了您的投资申请！',
+      'XXX已接受了您的投资申请！',
+      'XXX已拒绝了您的投资申请！',
+    ]
+  };
+  methods = {
+    goBack() {
+      wx.navigateBack({
+        delta: 1
+      });
+    },
+  };
+  events = {
+  };
+}
+</script>

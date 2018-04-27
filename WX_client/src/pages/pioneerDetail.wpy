@@ -23,7 +23,7 @@
   color: #f3f3f3;
 }
 .detail {
-  width: 100%;
+  width: calc(100% - 30px);
   padding: 10px 15px;
 }
 .zan-panel {
@@ -43,8 +43,9 @@
   font-size: 10px;
 }
 .comment {
-  width: 100%;
+  width: calc(100%-30px);
   padding: 10px 15px;
+  margin-bottom: 30px;
 }
 .comment-head {
   margin-bottom: 10px;
@@ -66,13 +67,14 @@
   bottom: 0;
   right: 0;
   width: 100%;
-  height: 30px;
+  height: 45px;
   padding: 5px 0;
   border-top: 1px solid white;
   background-color: #2d2d2d;
 }
 .commentInput view {
   width: calc(100%-40px);
+  height: 38px;
   margin-left: 20px;
   margin-right: 20px;
   background-color: #515151;
@@ -82,19 +84,20 @@
 .commentInput input {
   flex: 1;
   margin-left: 20px;
+  height: 38px;
   background-color: #515151;
-  font-size: 12px;
+  font-size: 14px;
 }
 .commentInput button {
+  height: 38px;
   position: static;
   border: 0;
   background-color: #515151;
   color: white;
   margin-left: 10px;
   width: 50px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 12px;
+  line-height: 38px;
+  font-size: 14px;
   padding-left: 0;
   padding-right: 0;
 }

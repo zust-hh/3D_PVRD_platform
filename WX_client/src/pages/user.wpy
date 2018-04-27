@@ -11,9 +11,9 @@
 }
 
 .userinfo-avatar {
-	width: 128rpx;
-	height: 128rpx;
-	margin: 20rpx;
+	width: 64px;
+	height: 64px;
+	margin: 10px;
 	border-radius: 50%;
 }
 
@@ -23,7 +23,7 @@
 .info_list {
 	width: 100%;
 	position: absolute;
-	top: 196px;
+	top: 211px;
 	color: white;
 }
 .info_list view {
@@ -47,7 +47,7 @@
       <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
     </view>
     <view class="info_list">
-			<view class="">
+			<view @tap="lookMyCompany">
 				<text>我的公司</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
@@ -55,7 +55,7 @@
 				<text>消息</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
-			<view>
+			<view @tap="lookMyApplication">
 				<text>申请</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
@@ -87,6 +87,16 @@ export default class User extends wepy.page {
         }
       })
 		}
-  }
+  };
+	lookMyCompany() {
+		wx.navigateTo({
+      url: '../pages/pioneerDetail'
+    })
+	};
+	lookMyApplication() {
+		wx.navigateTo({
+      url: '../pages/applicationList'
+    })
+	}
 }
 </script>

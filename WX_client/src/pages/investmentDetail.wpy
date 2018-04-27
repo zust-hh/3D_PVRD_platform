@@ -22,7 +22,7 @@
   color: #f3f3f3;
 }
 .detail {
-  width: 100%;
+  width: calc(100%-30px);
   padding: 10px 15px;
 }
 .zan-panel {

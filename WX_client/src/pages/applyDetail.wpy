@@ -17,7 +17,7 @@
 }
 .zan-panel {
   width: 100%;
-  background-color: #cdcdcd;
+  background-color: #333333;
 }
 .zan-field {
   background-color: #2d2d2d;
@@ -35,6 +35,9 @@ textarea {
   background-color: #333333;
   padding: 5px 8px;
   min-height: 150px;
+  color: white;
+  width: 100%;
+  font-size: 12px;
 }
 .apply-btn {
   position: relative;

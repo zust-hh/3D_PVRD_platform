@@ -1,6 +1,5 @@
 <style lang="scss">
 .one-comment {
-  width: calc(90% - 40px);
   height: auto;
   margin-bottom: 20px;
   border-radius: 5px;
