@@ -42,7 +42,7 @@
 }
 </style>
 <template>
-  <view class="one-talk">
+  <view class="one-talk" @tap="inputFocus({{publisher}})">
     <view class="one-talk-left">
       <image class="talkAvatar" src="{{avatar}}"></image>
     </view>
@@ -58,7 +58,7 @@
       </view>
       <view class="one-talk-replyList">
         <repeat for="{{replyList}}" key="index" index="index" item="item">
-          <view class="one-reply">
+          <view class="one-reply" catchtap="inputFocus({{item.replyFirst}})">
             <text>{{item.replyFirst}}@{{item.replySecond}}：{{item.replyContent}}</text>
           </view>
         </repeat>
@@ -88,6 +88,9 @@
     }
 
     methods = {
+      inputFocus(publisher) {
+        this.$emit('inputFocus', publisher);
+      }
     }
     onLoad () {
     }

@@ -51,7 +51,7 @@
 				<text>我的公司</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
-			<view>
+			<view @tap="lookMyNews">
 				<text>消息</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
@@ -96,6 +96,11 @@ export default class User extends wepy.page {
 	lookMyApplication() {
 		wx.navigateTo({
       url: '../pages/applicationList'
+    })
+	};
+	lookMyNews() {
+		wx.navigateTo({
+      url: '../pages/userNews'
     })
 	}
 }

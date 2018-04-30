@@ -98,6 +98,7 @@ export default class Talk extends wepy.page {
   };
   data = {
     showWrite: false,
+    placeholder: '输入评论',
     commentList: [
       {
         id: 0,
@@ -141,9 +142,36 @@ export default class Talk extends wepy.page {
           },
         ]
       },
+      {
+        id: 2,
+        avatar: '../images/test.png',
+        publisher: 'Zust_hh', // 发表评论的人
+        releaseTime: '2018-04-20', // 发表时间
+        talkContent: '这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！',
+        replyList: [
+          {
+            replyId: 0,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！',
+          },
+          {
+            replyId: 1,
+            replyFirst: '七天假', //发表回复的人
+            replySecond: 'Zust_hh', //被回复的对象
+            replyContent: '这家公司不错的！！',
+          },
+        ]
+      },
     ]
   };
-  events = {};
+  events = {
+    inputFocus(publisher) {
+      console.log(publisher);
+      this.placeholder = `回复${publisher}：`;
+      this.showWrite = true;
+    }
+  };
   methods = {
      goBack() {
       wx.navigateBack({
@@ -151,6 +179,7 @@ export default class Talk extends wepy.page {
       });
     },
     showWriteHandle() {
+      this.placeholder = '输入评论';
       this.showWrite = true;
     },
     bindBlur() {

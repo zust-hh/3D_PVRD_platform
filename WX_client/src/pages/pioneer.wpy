@@ -11,6 +11,7 @@
 <script>
 import wepy from "wepy";
 import OneCard from '../components/oneCard'
+import NetUtil from '../util/netUtil'
 
 export default class Pioneer extends wepy.page {
   components = {
@@ -38,5 +39,11 @@ export default class Pioneer extends wepy.page {
   };
   events = {
   };
+  onLoad() {
+    NetUtil.postJson('http://127.0.0.1:3000/users/searchUserById', {id:4})
+      .then((data) => {
+        console.log(data);
+      });
+  }
 }
 </script>

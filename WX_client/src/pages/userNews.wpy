@@ -28,7 +28,10 @@
     <view style="width: 100%;position: absolute;margin-top: 60px;">
       <repeat for="{{applicationList}}" key="index" index="index" item="item">
         <view class="one-application">
-          <p>{{item}}，请尽快前往后台查看</p>
+          <p><span style="color:#586c94;margin-right:10px;">{{item.sender}}</span>评论了你：</p>
+          <view style="margin-top:10px;">
+            <p style="font-size:13px;">{{item.news}}</p> 
+          </view>
         </view>
       </repeat>
     </view>
@@ -39,17 +42,25 @@
 import wepy from "wepy";
 import OneCard from '../components/oneCard'
 
-export default class ApplicationList extends wepy.page {
+export default class UserNews extends wepy.page {
   components = {
     OneCard,
   };
   data = {
     type: 'pioneer',
     applicationList: [
-      'XXX已接受了您的投资申请！请尽快前往后台查看',
-      'XXX已拒绝了您的投资申请！',
-      'XXX已接受了您的投资申请！',
-      'XXX已拒绝了您的投资申请！请尽快前往后台查看',
+      {
+        sender: 'Zust_hh',
+        news: '这是一家好公司！',
+      },
+      {
+        sender: 'Zust_hh',
+        news: '这是一家好公司！这是一家好公司！这是一家好公司！这是一家好公司！这是一家好公司！',
+      },
+      {
+        sender: 'Zust_hh',
+        news: '这是一家好公司！',
+      },
     ]
   };
   methods = {
