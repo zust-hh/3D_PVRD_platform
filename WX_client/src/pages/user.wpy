@@ -91,10 +91,10 @@ export default class User extends wepy.page {
 		NetUtil.postJson("http://192.168.0.126:8080/api/sessions", {
       loginType: 1,
       passwd: "",
-      telephoneNumber: this.$parent.globalData.userInfo.nickName,
+			telephoneNumber: this.$parent.globalData.userInfo.nickName,
+			userIcon: this.$parent.globalData.userInfo.avatarUrl,
     }).then(data => {
-      console.log(data);
-      this.$parent.globalData = data.data.token;
+      this.$parent.globalData.token = data.data.token;
     });
   };
 	lookMyCompany() {

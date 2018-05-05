@@ -80,6 +80,8 @@
 
 <script>
 import wepy from "wepy";
+import NetUtil from "../util/netUtil";
+import javaServer from "../config";
 
 export default class InvestmentDetail extends wepy.page {
   components = {
@@ -108,7 +110,12 @@ export default class InvestmentDetail extends wepy.page {
   };
   events = {};
   onLoad(option) {
-    console.log(option);
+    NetUtil.getJson(
+      `${javaServer}/api/investCompany/getInvestCompanyDetail?id=${option.id}`
+    ).then(data => {
+      this.commentList = data.data;
+      this.$apply();
+    });
   }
 }
 </script>
