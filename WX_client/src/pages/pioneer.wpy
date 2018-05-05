@@ -12,6 +12,7 @@
 import wepy from "wepy";
 import OneCard from '../components/oneCard'
 import NetUtil from '../util/netUtil'
+import javaServer from '../config';
 
 export default class Pioneer extends wepy.page {
   components = {
@@ -40,7 +41,8 @@ export default class Pioneer extends wepy.page {
   events = {
   };
   onLoad() {
-    NetUtil.postJson('http://127.0.0.1:3000/users/searchUserById', {id:4})
+    console.log(javaServer);
+    NetUtil.getJson('http://192.168.0.126:8080/api/pioneer/getPioneerList')
       .then((data) => {
         console.log(data);
       });

@@ -17,6 +17,7 @@ page {
 <script>
 import wepy from "wepy";
 import "wepy-async-function";
+import NetUtil from './util/netUtil'
 
 export default class extends wepy.app {
   config = {
@@ -30,8 +31,8 @@ export default class extends wepy.app {
       "pages/investmentDetail",
       "pages/applyDetail",
       "pages/applicationList",
-      "pages/userNews",
-      ],
+      "pages/userNews"
+    ],
     window: {
       navigationBarTextStyle: "white",
       navigationStyle: "custom",
@@ -39,37 +40,43 @@ export default class extends wepy.app {
       backgroundTextStyle: "dark"
     },
     tabBar: {
-    color: "#cdcdcd",
-    selectedColor: "white",
-    borderStyle: "white",
-    backgroundColor: "#2d2d2d",
-    list: [{
-      pagePath: "pages/pioneer",
-      iconPath: "images/iconfont-home.png",
-      selectedIconPath: "images/iconfont-home-active.png",
-      text: "找创业"
-    }, {
-      pagePath: "pages/investment",
-      iconPath: "images/iconfont-list.png",
-      selectedIconPath: "images/iconfont-list-active.png",
-      text: "寻投资"
-    }, {
-      pagePath: "pages/talk",
-      iconPath: "images/iconfont-cart.png",
-      selectedIconPath: "images/iconfont-cart-active.png",
-      text: "聊一聊"
-    }, {
-      pagePath: "pages/user",
-      iconPath: "images/iconfont-user.png",
-      selectedIconPath: "images/iconfont-user-active.png",
-      text: "我的"
-    }]
-  },
+      color: "#cdcdcd",
+      selectedColor: "white",
+      borderStyle: "white",
+      backgroundColor: "#2d2d2d",
+      list: [
+        {
+          pagePath: "pages/pioneer",
+          iconPath: "images/iconfont-home.png",
+          selectedIconPath: "images/iconfont-home-active.png",
+          text: "找创业"
+        },
+        {
+          pagePath: "pages/investment",
+          iconPath: "images/iconfont-list.png",
+          selectedIconPath: "images/iconfont-list-active.png",
+          text: "寻投资"
+        },
+        {
+          pagePath: "pages/talk",
+          iconPath: "images/iconfont-cart.png",
+          selectedIconPath: "images/iconfont-cart-active.png",
+          text: "聊一聊"
+        },
+        {
+          pagePath: "pages/user",
+          iconPath: "images/iconfont-user.png",
+          selectedIconPath: "images/iconfont-user-active.png",
+          text: "我的"
+        }
+      ]
+    }
   };
 
   globalData = {
     userInfo: null,
     userType: null,
+    token: null
   };
 
   constructor() {

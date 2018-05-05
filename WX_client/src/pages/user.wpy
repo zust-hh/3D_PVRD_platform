@@ -69,6 +69,7 @@
 
 <script>
 import wepy from "wepy";
+import NetUtil from '../util/netUtil'
 export default class User extends wepy.page {
   components = {};
   data = {
@@ -87,6 +88,14 @@ export default class User extends wepy.page {
         }
       })
 		}
+		NetUtil.postJson("http://192.168.0.126:8080/api/sessions", {
+      loginType: 1,
+      passwd: "",
+      telephoneNumber: this.$parent.globalData.userInfo.nickName,
+    }).then(data => {
+      console.log(data);
+      this.$parent.globalData = data.data.token;
+    });
   };
 	lookMyCompany() {
 		wx.navigateTo({
