@@ -91,6 +91,8 @@
 <script>
 import wepy from "wepy";
 import OneTalk from '../components/oneTalk'
+import NetUtil from "../util/netUtil";
+import javaServer from "../config";
 
 export default class Talk extends wepy.page {
   components = {

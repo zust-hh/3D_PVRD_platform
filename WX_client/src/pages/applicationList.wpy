@@ -28,7 +28,7 @@
     <view style="width: 100%;position: absolute;margin-top: 60px;">
       <repeat for="{{applicationList}}" key="index" index="index" item="item">
         <view class="one-application">
-          <p>{{item}}，请尽快前往后台查看</p>
+          <p>{{item}}向您提交了投资申请，请尽快前往后台查看</p>
         </view>
       </repeat>
     </view>
@@ -38,6 +38,8 @@
 <script>
 import wepy from "wepy";
 import OneCard from '../components/oneCard'
+import NetUtil from "../util/netUtil";
+import javaServer from "../config";
 
 export default class ApplicationList extends wepy.page {
   components = {
@@ -45,12 +47,7 @@ export default class ApplicationList extends wepy.page {
   };
   data = {
     type: 'pioneer',
-    applicationList: [
-      'XXX已接受了您的投资申请！请尽快前往后台查看',
-      'XXX已拒绝了您的投资申请！',
-      'XXX已接受了您的投资申请！',
-      'XXX已拒绝了您的投资申请！请尽快前往后台查看',
-    ]
+    applicationList: []
   };
   methods = {
     goBack() {
@@ -61,5 +58,12 @@ export default class ApplicationList extends wepy.page {
   };
   events = {
   };
+  onLoad() {
+    NetUtil.getJson(`${javaServer}/api/apply/getApplyList?name=${this.$parent.globalData.userInfo.nickName}`)
+    .then(data => {
+      this.applicationList = data.data;
+      this.$apply();
+    });
+  }
 }
 </script>

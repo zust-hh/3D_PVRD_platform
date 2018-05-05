@@ -239,18 +239,33 @@ export default class PioneerDetail extends wepy.page {
     }
   };
   onLoad(option) {
-    NetUtil.getJson(
-      `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`
-    ).then(data => {
-      this.companyDetail = data.data;
-      this.$apply();
-    });
-    NetUtil.getJson(
-      `${javaServer}/api/comment?id=${option.id}`
-    ).then(data => {
-      this.commentList = data.data;
-      this.$apply();
-    });
+    if (option.id) {
+      NetUtil.getJson(
+        `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`
+      ).then(data => {
+        this.companyDetail = data.data;
+        this.$apply();
+      });
+      NetUtil.getJson(`${javaServer}/api/comment?id=${option.id}`).then(
+        data => {
+          this.commentList = data.data;
+          this.$apply();
+        }
+      );
+    } else if (option.name) {
+      NetUtil.getJson(
+        `${javaServer}/api/pioneer/getPioneerDetail?name=${option.name}`
+      ).then(data => {
+        this.companyDetail = data.data;
+        this.$apply();
+      });
+      NetUtil.getJson(`${javaServer}/api/comment?name=${option.name}`).then(
+        data => {
+          this.commentList = data.data;
+          this.$apply();
+        }
+      );
+    }
   }
 }
 </script>

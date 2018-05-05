@@ -1,43 +1,43 @@
 <style lang="scss">
 @import "../ui/zanui/icon.scss";
 .userinfo {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	padding-top: 80px;
-	padding-bottom: 20px;
-	border-bottom: 1px solid #f55a5d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 80px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f55a5d;
 }
 
 .userinfo-avatar {
-	width: 64px;
-	height: 64px;
-	margin: 10px;
-	border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  margin: 10px;
+  border-radius: 50%;
 }
 
 .userinfo-nickname {
-	color: #fff;
+  color: #fff;
 }
 .info_list {
-	width: 100%;
-	position: absolute;
-	top: 211px;
-	color: white;
+  width: 100%;
+  position: absolute;
+  top: 211px;
+  color: white;
 }
 .info_list view {
-	padding-left: 20px;
-	padding-right: 10px;
-	line-height: 40px;
-	height: 40px;
-	border-bottom: 1px solid #f55a5d;
+  padding-left: 20px;
+  padding-right: 10px;
+  line-height: 40px;
+  height: 40px;
+  border-bottom: 1px solid #f55a5d;
 }
 .info_list text {
-	font-size: 12px;
+  font-size: 12px;
 }
 .backBtn {
-	float: right;
+  float: right;
 }
 </style>
 <template>
@@ -69,48 +69,54 @@
 
 <script>
 import wepy from "wepy";
-import NetUtil from '../util/netUtil'
+import NetUtil from "../util/netUtil";
+import javaServer from "../config";
+
 export default class User extends wepy.page {
   components = {};
   data = {
-    userInfo: {},
+    userInfo: {}
   };
-	events = {};
+  events = {};
   onLoad() {
-		if (this.$parent.globalData.userInfo) {
+    if (this.$parent.globalData.userInfo) {
       this.userInfo = this.$parent.globalData.userInfo;
     } else {
-			wx.getUserInfo({
+      wx.getUserInfo({
         success: res => {
           this.$parent.globalData.userInfo = res.userInfo;
           this.userInfo = res.userInfo;
-					this.$apply();
+          this.$apply();
         }
-      })
-		}
-		NetUtil.postJson("http://192.168.0.126:8080/api/sessions", {
+      });
+    }
+    NetUtil.postJson(`${javaServer}/api/sessions`, {
       loginType: 1,
       passwd: "",
-			telephoneNumber: this.$parent.globalData.userInfo.nickName,
-			userIcon: this.$parent.globalData.userInfo.avatarUrl,
+      telephoneNumber: this.$parent.globalData.userInfo.nickName,
+      userIcon: this.$parent.globalData.userInfo.avatarUrl
     }).then(data => {
-      this.$parent.globalData.token = data.data.token;
+			console.log(data);
+			this.$parent.globalData.userType = data.data.data.user.userType;
+      this.$parent.globalData.token = data.data.data.token;
     });
-  };
-	lookMyCompany() {
-		wx.navigateTo({
-      url: '../pages/pioneerDetail'
-    })
-	};
-	lookMyApplication() {
-		wx.navigateTo({
-      url: '../pages/applicationList'
-    })
-	};
-	lookMyNews() {
-		wx.navigateTo({
-      url: '../pages/userNews'
-    })
-	}
+  }
+  lookMyCompany() {
+    wx.navigateTo({
+      url: `../pages/pioneerDetail?name=${
+        this.$parent.globalData.userInfo.nickName
+      }`
+    });
+  }
+  lookMyApplication() {
+    wx.navigateTo({
+      url: "../pages/applicationList"
+    });
+  }
+  lookMyNews() {
+    wx.navigateTo({
+      url: "../pages/userNews"
+    });
+  }
 }
 </script>
