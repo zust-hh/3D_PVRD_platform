@@ -11,6 +11,8 @@
 <script>
 import wepy from "wepy";
 import OneCard from '../components/oneCard'
+import NetUtil from "../util/netUtil";
+import javaServer from "../config";
 
 export default class Investment extends wepy.page {
   components = {
@@ -18,25 +20,18 @@ export default class Investment extends wepy.page {
   };
   data = {
     type: 'investment',
-    list: [
-      {
-        id: 0,
-        backgroundImage: '../images/test.png',
-        companyName: '3D创业公司',
-        involvingIndustry: '金融/商务',
-      },
-      {
-        id: 1,
-        backgroundImage: '../images/test.png',
-        companyName: '3D创业公司',
-        involvingIndustry: '金融/商务',
-      },
-    ]
+    list: [],
   };
   methods = {
     
   };
   events = {
   };
+  onLoad() {
+    NetUtil.getJson(`${javaServer}/api/investCompany/getInvestCompanyList`).then(data => {
+      this.list = data.data;
+      this.$apply();
+    });
+  }
 }
 </script>

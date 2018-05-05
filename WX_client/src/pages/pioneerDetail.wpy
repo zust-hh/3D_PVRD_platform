@@ -79,7 +79,7 @@
   margin-right: 20px;
   background-color: #515151;
   display: flex;
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 .commentInput input {
   flex: 1;
@@ -104,23 +104,23 @@
 </style>
 <template>
   <scroll-view scroll-y class="container">
-    <image class="bacImg" src="../images/test.png" @tap="show"></image>
+    <image class="bacImg" src="{{'http://192.168.43.232:8080'+companyDetail.bookImg}}" @tap="show"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
       <view class="zan-panel">
         <view class="zan-cell">
           <view class="zan-cell__bd">公司名称：
-            <text>{{companyName}}</text>
+            <text>{{companyDetail.companyName}}</text>
           </view>
         </view>
         <view class="zan-cell">
           <view class="zan-cell__bd">公司CEO：
-            <text>{{companyCEO}}</text>
+            <text>{{companyDetail.companyCeo}}</text>
           </view>
         </view>
         <view class="zan-cell">
           <view class="zan-cell__bd">公司简介：
-            <text>{{companyProfile}}</text>
+            <text>{{companyDetail.companyDescription}}</text>
           </view>
         </view>
       </view>
@@ -128,11 +128,11 @@
         <view class="comment-head">
           <text class="comment-head-top">评论交流</text>
           <view style="margin-top:10px;">
-            <text class="comment-head-bottom">有{{commentNum}}条评论</text>
+            <text class="comment-head-bottom">有{{commentList.length}}条评论</text>
           </view>
         </view>
         <repeat for="{{commentList}}" key="index" index="index" item="item">
-          <OneComment :id="item.id" :avatar="item.avatar" :publisher="item.publisher" :releaseTime="item.releaseTime" :commentContent="item.commentContent" :replyList="item.replyList" />
+          <OneComment :id="item.comment.commentId" :avatar="item.comment.userIcon" :publisher="item.comment.userWx" :releaseTime="item.comment.comentTime" :commentContent="item.comment.commentContent" :replyList="item.subcomments" />
         </repeat>
       </view>
     </view>
@@ -147,62 +147,69 @@
 
 <script>
 import wepy from "wepy";
-import OneComment from '../components/oneComment'
+import OneComment from "../components/oneComment";
+import NetUtil from "../util/netUtil";
+import javaServer from "../config";
 
 export default class PioneerDetail extends wepy.page {
   components = {
-    OneComment,
+    OneComment
   };
   data = {
     focus: false,
-    placeholder: '输入评论',
-    companyName: '3D创业公司',
-    companyCEO: '王国庆',
-    companyProfile: '这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！',
+    placeholder: "输入评论",
+    companyDetail: {},
+    // companyName: '3D创业公司',
+    // companyCEO: '王国庆',
+    // companyProfile: '这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！',
     commentNum: 3,
     commentList: [
       {
         id: 0,
-        avatar: '../images/test.png',
-        publisher: 'Zust_hh', // 发表评论的人
-        releaseTime: '2018-04-20', // 发表时间
-        commentContent: '这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！',
+        avatar: "../images/test.png",
+        publisher: "Zust_hh", // 发表评论的人
+        releaseTime: "2018-04-20", // 发表时间
+        commentContent:
+          "这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！",
         replyList: [
           {
             replyId: 0,
-            replyFirst: '七天假', //发表回复的人
-            replySecond: 'Zust_hh', //被回复的对象
-            replyContent: '这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！',
+            replyFirst: "七天假", //发表回复的人
+            replySecond: "Zust_hh", //被回复的对象
+            replyContent:
+              "这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！"
           },
           {
             replyId: 1,
-            replyFirst: '七天假', //发表回复的人
-            replySecond: 'Zust_hh', //被回复的对象
-            replyContent: '这家公司不错的！！',
-          },
+            replyFirst: "七天假", //发表回复的人
+            replySecond: "Zust_hh", //被回复的对象
+            replyContent: "这家公司不错的！！"
+          }
         ]
       },
       {
         id: 1,
-        avatar: '../images/test.png',
-        publisher: 'Zust_hh', // 发表评论的人
-        releaseTime: '2018-04-20', // 发表时间
-        commentContent: '这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！',
+        avatar: "../images/test.png",
+        publisher: "Zust_hh", // 发表评论的人
+        releaseTime: "2018-04-20", // 发表时间
+        commentContent:
+          "这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！",
         replyList: [
           {
             replyId: 0,
-            replyFirst: '七天假', //发表回复的人
-            replySecond: 'Zust_hh', //被回复的对象
-            replyContent: '这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！',
+            replyFirst: "七天假", //发表回复的人
+            replySecond: "Zust_hh", //被回复的对象
+            replyContent:
+              "这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！"
           },
           {
             replyId: 1,
-            replyFirst: '七天假', //发表回复的人
-            replySecond: 'Zust_hh', //被回复的对象
-            replyContent: '这家公司不错的！！',
-          },
+            replyFirst: "七天假", //发表回复的人
+            replySecond: "Zust_hh", //被回复的对象
+            replyContent: "这家公司不错的！！"
+          }
         ]
-      },
+      }
     ]
   };
   methods = {
@@ -213,15 +220,15 @@ export default class PioneerDetail extends wepy.page {
     },
     show() {
       wx.navigateTo({
-        url: './threeD'
-      })
+        url: "./threeD"
+      });
     },
     bindBlur() {
       this.placeholder = "输入评论";
       this.focus = false;
     },
     sendComment() {
-      console.log('发送');
+      console.log("发送");
     }
   };
   events = {
@@ -232,7 +239,18 @@ export default class PioneerDetail extends wepy.page {
     }
   };
   onLoad(option) {
-    console.log(option);
+    NetUtil.getJson(
+      `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`
+    ).then(data => {
+      this.companyDetail = data.data;
+      this.$apply();
+    });
+    NetUtil.getJson(
+      `${javaServer}/api/comment?id=${option.id}`
+    ).then(data => {
+      this.commentList = data.data;
+      this.$apply();
+    });
   }
 }
 </script>

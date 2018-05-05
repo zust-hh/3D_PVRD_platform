@@ -58,7 +58,7 @@
     <view class="one-comment-replyList">
       <repeat for="{{replyList}}" key="index" index="index" item="item">
         <view class="one-reply" catchtap="inputFocus({{item.replyFirst}})">
-          <text>{{item.replyFirst}}@{{item.replySecond}}：{{item.replyContent}}</text>
+          <text>{{item.userAName}}@{{item.userBName}}：{{item.subCommentContent}}</text>
         </view>
       </repeat>
     </view>
