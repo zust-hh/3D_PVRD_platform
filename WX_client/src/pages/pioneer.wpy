@@ -21,7 +21,14 @@ export default class Pioneer extends wepy.page {
   };
   data = {
     type: "pioneer",
-    list: []
+    list: [
+      {
+        companyId: 1,
+        bookImg: '../images/avatar.png',
+        companyName: '123',
+        companyTags: 'nihao',
+      }
+    ]
   };
   methods = {};
   events = {};

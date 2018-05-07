@@ -1,16 +1,23 @@
 <style lang="scss">
 </style>
 <template>
-  <web-view src="file:///Users/didi/Documents/project/threeJs/3d_panorama.html"></web-view>
+  <web-view src="{{webUrl}}"></web-view>
 </template>
 
 <script>
 import wepy from "wepy";
 export default class threeD extends wepy.page {
   components = {};
-  data = {};
+  data = {
+    webUrl: "",
+  };
   methods = {
   }
   events = {};
+  onLoad(option) {
+    console.log(option.id);
+    this.webUrl = `file:///Users/didi/Documents/project/threeJs/3d_panorama.html?${option.id}`
+    this.$apply();
+  }
 }
 </script>
