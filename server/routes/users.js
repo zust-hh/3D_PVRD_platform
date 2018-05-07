@@ -3,7 +3,7 @@ var router = express.Router();
 // 导入MySQL模块
 var mysql = require('mysql');
 var dbConfig = require('../db/DBConfig');
-var usersql = require('../db/usersql');
+var usersql = require('../db/company');
 // 使用DBConfig.js的配置信息创建一个MySQL连接池
 var pool = mysql.createPool(dbConfig.mysql);
 // 响应一个JSON数据
@@ -40,7 +40,16 @@ router.get('/addUser', function (req, res, next) {
     });
   });
 });
-
+router.get('/test', function (req, res, next) {
+  // 从连接池获取连接
+  console.log(req.query);
+  var result = {
+    code: 200,
+    msg: '增加成功'
+  };
+  responseJSON(res, result);
+    console.log('asfasfas')
+});
 router.get('/searchAllUser', function (req, res, next) {
   // 从连接池获取连接 
   pool.getConnection(function (err, connection) {
