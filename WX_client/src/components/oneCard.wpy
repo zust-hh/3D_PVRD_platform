@@ -45,7 +45,7 @@
 <template>
   <view class="card" @tap="show({{id}}, {{type}})">
     <view class="mask"></view>
-    <image class="bacImg" src="{{'http://192.168.43.232:8080'+backgroundImage}}"></image>
+    <image class="bacImg" src="{{javaServer}}+{{backgroundImage}}"></image>
     <text wx:if="{{type === 'pioneer'}}" class="companyName">{{companyName}}</text>
     <text wx:if="{{type === 'investment'}}" class="companyName">投资行：{{companyName}}</text>
     <text class="involvingIndustry">{{involvingIndustry}}</text>

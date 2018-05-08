@@ -28,9 +28,9 @@
     <view style="width: 100%;position: absolute;margin-top: 60px;">
       <repeat for="{{applicationList}}" key="index" index="index" item="item">
         <view class="one-application">
-          <p><span style="color:#586c94;margin-right:10px;">{{item.sender}}</span>评论了你：</p>
+          <p><span style="color:#586c94;margin-right:10px;">{{item.userAName}}</span>回复了你：</p>
           <view style="margin-top:10px;">
-            <p style="font-size:13px;">{{item.news}}</p> 
+            <p style="font-size:13px;">{{item.subCommentContent}}</p> 
           </view>
         </view>
       </repeat>
@@ -40,37 +40,33 @@
 
 <script>
 import wepy from "wepy";
-import OneCard from '../components/oneCard'
+import OneCard from "../components/oneCard";
+import NetUtil from "../util/netUtil";
+import javaServer from "../config";
 
 export default class UserNews extends wepy.page {
   components = {
-    OneCard,
+    OneCard
   };
   data = {
-    type: 'pioneer',
-    applicationList: [
-      {
-        sender: 'Zust_hh',
-        news: '这是一家好公司！',
-      },
-      {
-        sender: 'Zust_hh',
-        news: '这是一家好公司！这是一家好公司！这是一家好公司！这是一家好公司！这是一家好公司！',
-      },
-      {
-        sender: 'Zust_hh',
-        news: '这是一家好公司！',
-      },
-    ]
+    type: "pioneer",
+    applicationList: []
   };
   methods = {
     goBack() {
       wx.navigateBack({
         delta: 1
       });
-    },
+    }
   };
-  events = {
-  };
+  events = {};
+  onLoad() {
+    NetUtil.getJson(`${javaServer}/api/message?name=${this.$parent.globalData.userInfo.nickName}`)
+    .then(data => {
+      console.log(data.data[0].userAName);
+      this.applicationList = data.data;
+      this.$apply();
+    });
+  }
 }
 </script>

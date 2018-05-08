@@ -104,7 +104,7 @@
 </style>
 <template>
   <scroll-view scroll-y class="container">
-    <image class="bacImg" src="{{'http://192.168.43.232:8080'+companyDetail.bookImg}}" @tap="show"></image>
+    <image class="bacImg" src="{{javaServer}}+{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
       <view class="zan-panel">
@@ -159,58 +159,9 @@ export default class PioneerDetail extends wepy.page {
     focus: false,
     placeholder: "输入评论",
     companyDetail: {},
-    // companyName: '3D创业公司',
-    // companyCEO: '王国庆',
-    // companyProfile: '这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！这是一家好公司，好公司呀，好公司！！！',
-    commentNum: 3,
-    commentList: [
-      {
-        id: 0,
-        avatar: "../images/test.png",
-        publisher: "Zust_hh", // 发表评论的人
-        releaseTime: "2018-04-20", // 发表时间
-        commentContent:
-          "这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！",
-        replyList: [
-          {
-            replyId: 0,
-            replyFirst: "七天假", //发表回复的人
-            replySecond: "Zust_hh", //被回复的对象
-            replyContent:
-              "这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！"
-          },
-          {
-            replyId: 1,
-            replyFirst: "七天假", //发表回复的人
-            replySecond: "Zust_hh", //被回复的对象
-            replyContent: "这家公司不错的！！"
-          }
-        ]
-      },
-      {
-        id: 1,
-        avatar: "../images/test.png",
-        publisher: "Zust_hh", // 发表评论的人
-        releaseTime: "2018-04-20", // 发表时间
-        commentContent:
-          "这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！这是家好公司，我要进！！",
-        replyList: [
-          {
-            replyId: 0,
-            replyFirst: "七天假", //发表回复的人
-            replySecond: "Zust_hh", //被回复的对象
-            replyContent:
-              "这家公司不错的！！这家公司不错的！！这家公司不错的！！这家公司不错的！！"
-          },
-          {
-            replyId: 1,
-            replyFirst: "七天假", //发表回复的人
-            replySecond: "Zust_hh", //被回复的对象
-            replyContent: "这家公司不错的！！"
-          }
-        ]
-      }
-    ]
+    commentNum: 0,
+    commentList: [],
+    companyId: 0,
   };
   methods = {
     goBack() {
@@ -218,9 +169,9 @@ export default class PioneerDetail extends wepy.page {
         delta: 1
       });
     },
-    show() {
+    show(id) {
       wx.navigateTo({
-        url: "./threeD"
+        url: `./threeD?id=${id}`
       });
     },
     bindBlur() {
@@ -233,24 +184,39 @@ export default class PioneerDetail extends wepy.page {
   };
   events = {
     inputFocus(publisher) {
-      console.log(publisher);
       this.placeholder = `回复${publisher}：`;
       this.focus = true;
     }
   };
   onLoad(option) {
-    NetUtil.getJson(
-      `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`
-    ).then(data => {
-      this.companyDetail = data.data;
-      this.$apply();
-    });
-    NetUtil.getJson(
-      `${javaServer}/api/comment?id=${option.id}`
-    ).then(data => {
-      this.commentList = data.data;
-      this.$apply();
-    });
+    if (option.id) {
+      NetUtil.getJson(
+        `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`
+      ).then(data => {
+        this.companyDetail = data.data;
+        this.companyId = data.data.companyId;
+        this.$apply();
+      });
+      NetUtil.getJson(`${javaServer}/api/comment?id=${option.id}`).then(
+        data => {
+          this.commentList = data.data;
+          this.$apply();
+        }
+      );
+    } else if (option.name) {
+      NetUtil.getJson(
+        `${javaServer}/api/pioneer/getPioneerDetail?name=${option.name}`
+      ).then(data => {
+        this.companyDetail = data.data;
+        this.$apply();
+      });
+      NetUtil.getJson(`${javaServer}/api/comment?name=${option.name}`).then(
+        data => {
+          this.commentList = data.data;
+          this.$apply();
+        }
+      );
+    }
   }
 }
 </script>
