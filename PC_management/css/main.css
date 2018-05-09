@@ -3515,7 +3515,7 @@ p, .table, .alert, .carousel {
     /* General */
     #login-container {
         width: 380px;
-        top: 120px;
+        /* top: 120px; */
         margin-left: -190px;
     }
 

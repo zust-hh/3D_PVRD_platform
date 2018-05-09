@@ -207,6 +207,13 @@
     <!-- Load and execute javascript code used only in this page -->
     <script src="js/pages/readyDashboard.js"></script>
     <script>$(function () { ReadyDashboard.init(); });</script>
+    <script>
+      if (window.localStorage) {
+        localStorage.userId = 3;
+      } else {
+        alert('This browser does NOT support localStorage');
+      }
+    </script>
   </body>
 
 </html>
