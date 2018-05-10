@@ -46,7 +46,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(8818,function(req,res){
-  console.log("已开启服务，端口为8818")
+app.listen(8888,function(req,res){
+  console.log("已开启服务，端口为8888")
 });
 module.exports = app;

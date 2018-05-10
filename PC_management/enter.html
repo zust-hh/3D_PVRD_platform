@@ -91,13 +91,13 @@
               <li>
                 <a href="processforchuangye.html">
                   <i class="gi gi-more_items sidebar-nav-icon"></i>
-                  <span class="sidebar-nav-mini-hide">申请进度</span>
+                  <span class="sidebar-nav-mini-hide">申请投资</span>
                 </a>
               </li>
               <li>
                 <a href="audit.html">
                   <i class="gi gi-inbox sidebar-nav-icon"></i>
-                  <span class="sidebar-nav-mini-hide">申请审核</span>
+                  <span class="sidebar-nav-mini-hide">入驻申请审核</span>
                 </a>
               </li>
               <li>
@@ -153,7 +153,7 @@
                   <strong>XXX</strong>
                 </li>
                 <li>
-                  <a href="page_ready_login.html">
+                  <a href="login.html">
                     <i class="fa fa-power-off fa-fw pull-right"></i>
                     注销
                   </a>
@@ -188,7 +188,7 @@
                 <!-- END Form Validation Title -->
 
                 <!-- Form Validation Form -->
-                <form id="form-validation" action="#" method="post" class="form-horizontal form-bordered">
+                <form id="form-validation" action="http://192.168.43.232:8080/file/upload" method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
                   <div id="addcontent">
                     <div class="form-group">
                       <label class="col-md-3 control-label">公司名称
@@ -198,6 +198,8 @@
                         <input type="text" id="name" name="companyName" class="form-control" placeholder="请填写公司名称">
                       </div>
                     </div>
+                    <input type="text" id="name" name="companyType" class="form-control" placeholder="请填写公司名称" style="display: none" value="1">
+                    <input type="text" id="name" name="userId" class="form-control" placeholder="请填写公司名称" style="display: none" value="4">
                     <div class="form-group">
                       <label class="col-md-3 control-label">公司CEO
                         <span class="text-danger">*</span>
@@ -227,36 +229,36 @@
                         <span class="text-danger">*</span>
                       </label>
                       <div class="col-md-8">
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="互联网">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 互联网
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="科技">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 科技
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="金融">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 金融
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="图像">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 图像
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="电商">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 电商
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="投资">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 投资
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="游戏">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 游戏
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter">
-                          <input type="radio" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" value="其它">
+                          <input type="checkbox" name="companyTags">
                           <span></span> 其它
                         </label>
                       </div>
@@ -515,6 +517,16 @@
       $("#round" + num + " #bottom .btn-info").removeAttr('href');
       uploadround("#round" + num);
     })
+
+
+    // jquery 表单提交   
+    // $("#form-validation").submit(function (message) {
+    //   console.log("成功")
+    //   // 对于表单提交成功后处理，message为返回内容
+    //   return false;
+    // });
+
+
 
   </script>
 </body>

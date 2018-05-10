@@ -88,13 +88,13 @@
                 <li>
                   <a href="processforchuangye.html">
                     <i class="gi gi-more_items sidebar-nav-icon"></i>
-                    <span class="sidebar-nav-mini-hide">申请进度</span>
+                    <span class="sidebar-nav-mini-hide">申请投资</span>
                   </a>
                 </li>
                 <li>
                   <a href="audit.html">
                     <i class="gi gi-inbox sidebar-nav-icon"></i>
-                    <span class="sidebar-nav-mini-hide">申请审核</span>
+                    <span class="sidebar-nav-mini-hide">入驻申请审核</span>
                   </a>
                 </li>
                 <li>
@@ -150,7 +150,7 @@
                     <strong>XXX</strong>
                   </li>
                   <li>
-                    <a href="page_ready_login.html">
+                    <a href="login.html">
                       <i class="fa fa-power-off fa-fw pull-right"></i>
                       注销
                     </a>
@@ -201,12 +201,16 @@
     <!-- jQuery, Bootstrap, jQuery plugins and Custom JS code -->
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/plugins.js"></script>
+   
     <script src="js/app.js"></script>
 
     <!-- Load and execute javascript code used only in this page -->
     <script src="js/pages/readyDashboard.js"></script>
-    <script>$(function () { ReadyDashboard.init(); });</script>
+    <script>
+    // $(function () { ReadyDashboard.init(); });
+    localStorage.nodeUrl="http://localhost:8888";
+    </script>
+     <script src="js/plugins.js"></script>
   </body>
 
 </html>
