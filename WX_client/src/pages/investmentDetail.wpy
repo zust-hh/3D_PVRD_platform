@@ -89,6 +89,7 @@ export default class InvestmentDetail extends wepy.page {
   data = {
     companyDetail: {},
     companyId: 0,
+    javaServer: '',
     };
   methods = {
     goBack() {
@@ -109,6 +110,8 @@ export default class InvestmentDetail extends wepy.page {
   };
   events = {};
   onLoad(option) {
+    this.javaServer = javaServer;
+    this.$apply();
     if (option.id) {
       NetUtil.getJson(
         `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`

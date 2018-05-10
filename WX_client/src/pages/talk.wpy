@@ -19,7 +19,6 @@
 .talk-detail {
   width: 100%;
   margin-top: -5px;
-  padding-top: 30px;
   background-color: white;
 }
 .talk-button {
@@ -72,7 +71,7 @@
 <template>
   <scroll-view scroll-y  class="container">
     <image class="bacImg" src="../images/test.png"></image>
-    <image class="avatar" src="../images/avatar.png"></image>
+    <image class="avatar" src="{{avatar}}"></image>
     <view class="talk-detail">
       <repeat for="{{commentList}}" key="index" index="index" item="item">
         <OneTalk :id="item.comment.commentId" :avatar="item.comment.userIcon" :publisher="item.comment.userWx" :releaseTime="item.comment.comentTime" :talkContent="item.comment.commentContent" :replyList="item.subcomments" />
@@ -101,7 +100,8 @@ export default class Talk extends wepy.page {
   data = {
     showWrite: false,
     placeholder: "输入评论",
-    commentList: []
+    commentList: [],
+    avatar: '',
   };
   events = {
     inputFocus(publisher) {
@@ -125,6 +125,7 @@ export default class Talk extends wepy.page {
     }
   };
   onLoad() {
+    this.avatar = this.$parent.globalData.userInfo.avatarUrl;
     NetUtil.getJson(`${javaServer}/api/comment?id=0`).then(data => {
       this.commentList = data.data;
       this.$apply();

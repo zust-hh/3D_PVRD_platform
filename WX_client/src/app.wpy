@@ -76,7 +76,7 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    userType: null, // 空：wx用户； 1: 创业公司  2：投资机构
+    userType: null, // 空：wx用户； chuangye: 创业公司  touzi：投资机构
     token: null,
     userId: null
   };
@@ -114,26 +114,32 @@ export default class extends wepy.app {
 
   getUserInfo() {
     const that = this;
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo;
+    if (that.globalData.userInfo) {
+      return that.globalData.userInfo;
     }
-    wepy.getUserInfo({
-      success(res) {
+    wx.getUserInfo({
+      success: res => {
         that.globalData.userInfo = res.userInfo;
-        this.$apply();
-        NetUtil.postJson(`${javaServer}/api/sessions`, {
-          loginType: 1,
-          passwd: "",
-          telephoneNumber: this.$parent.globalData.userInfo.nickName,
-          userIcon: this.$parent.globalData.userInfo.avatarUrl
-        }).then(data => {
-          console.log(data);
-          this.$parent.globalData.userType = data.data.data.userType;
-          this.$parent.globalData.token = data.data.data.token;
-          this.$parent.globalData.userId = data.data.data.userId;
-        });
       }
     });
+    // wepy.getUserInfo({
+    //   success(res) {
+    //     that.globalData.userInfo = res.userInfo;
+    //     console.log(that.globalData.userInfo);
+    //     // NetUtil.postJson(`${javaServer}/api/sessions`, {
+    //     //   loginType: 1,
+    //     //   passwd: "",
+    //     //   telephoneNumber: that.globalData.userInfo.nickName,
+    //     //   userIcon: that.globalData.userInfo.avatarUrl
+    //     // }).then(data => {
+    //     //   console.log(2);
+    //     //   console.log(data);
+    //     //   that.globalData.userType = data.data.data.userType;
+    //     //   that.globalData.token = data.data.data.token;
+    //     //   that.globalData.userId = data.data.data.userId;
+    //     // });
+    //   }
+    // });
   }
 }
 </script>

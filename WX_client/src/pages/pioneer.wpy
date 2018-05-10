@@ -24,9 +24,9 @@ export default class Pioneer extends wepy.page {
     list: [
       {
         companyId: 1,
-        bookImg: '../images/avatar.png',
-        companyName: '123',
-        companyTags: 'nihao',
+        bookImg: "../images/avatar.png",
+        companyName: "123",
+        companyTags: "nihao"
       }
     ]
   };
@@ -36,6 +36,22 @@ export default class Pioneer extends wepy.page {
     NetUtil.getJson(`${javaServer}/api/pioneer/getPioneerList`).then(data => {
       this.list = data.data;
       this.$apply();
+    });
+    wx.getUserInfo({
+      success: res => {
+        console.log(res);
+        this.$parent.globalData.userInfo = res.userInfo;
+        NetUtil.postJson(`${javaServer}/api/sessions`, {
+          loginType: 1,
+          passwd: "",
+          telephoneNumber: this.$parent.globalData.userInfo.nickName,
+          userIcon: this.$parent.globalData.userInfo.avatarUrl
+        }).then(data => {
+          this.$parent.globalData.userType = data.data.data.user.userType;
+          this.$parent.globalData.token = data.data.data.token;
+          this.$parent.globalData.userId = data.data.data.user.userId;
+        });
+      }
     });
   }
 }

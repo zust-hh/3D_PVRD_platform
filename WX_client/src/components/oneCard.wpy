@@ -65,6 +65,7 @@
     }
 
     data = {
+      javaServer: '',
     }
     events = {
     }
@@ -84,6 +85,8 @@
       }
     }
     onLoad () {
+      this.javaServer = javaServer;
+      this.$apply();
     }
   }
 </script>

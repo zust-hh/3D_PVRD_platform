@@ -28,7 +28,7 @@ export default class Investment extends wepy.page {
   events = {
   };
   onLoad() {
-    NetUtil.getJson(`${javaServer}/api/pioneer/getPioneertouziList`).then(data => {
+    NetUtil.getJson(`${javaServer}/api/pioneer/getInvestList`).then(data => {
       this.list = data.data;
       this.$apply();
     });

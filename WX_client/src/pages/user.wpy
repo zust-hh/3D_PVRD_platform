@@ -47,7 +47,7 @@
       <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
     </view>
     <view class="info_list">
-			<view @tap="lookMyCompany" wx:if="{{!this.$parent.globalData.userType}}">
+			<view @tap="lookMyCompany" wx:if="{{userType}}">
 				<text>我的公司</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
@@ -55,7 +55,7 @@
 				<text>消息</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
-			<view @tap="lookMyApplication" wx:if="{{this.$parent.globalData.userType == 2}}">
+			<view @tap="lookMyApplication" wx:if="{{userType == 'touzi'}}">
 				<text>申请</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
@@ -75,35 +75,17 @@ import javaServer from "../config";
 export default class User extends wepy.page {
   components = {};
   data = {
-    userInfo: {}
+    userInfo: {},
+    userType: '',
   };
   events = {};
   onLoad() {
-    if (this.$parent.globalData.userInfo) {
-      this.userInfo = this.$parent.globalData.userInfo;
-    } else {
-      wx.getUserInfo({
-        success: res => {
-          this.$parent.globalData.userInfo = res.userInfo;
-          this.userInfo = res.userInfo;
-          this.$apply();
-        }
-      });
-    }
-    NetUtil.postJson(`${javaServer}/api/sessions`, {
-      loginType: 1,
-      passwd: "",
-      telephoneNumber: this.$parent.globalData.userInfo.nickName,
-      userIcon: this.$parent.globalData.userInfo.avatarUrl
-    }).then(data => {
-      console.log(data);
-      this.$parent.globalData.userType = data.data.data.userType;
-      this.$parent.globalData.token = data.data.data.token;
-      this.$parent.globalData.userId = data.data.data.userId;
-    });
+    this.userInfo = this.$parent.globalData.userInfo;
+    this.userType = this.$parent.globalData.userType;
+    this.$apply();
   }
   lookMyCompany() {
-    if (this.$parent.globalData.userType = 1) {
+    if (this.userType == 'chuangye') {
       wx.navigateTo({
         url: `../pages/pioneerDetail?name=${
           this.$parent.globalData.userInfo.nickName

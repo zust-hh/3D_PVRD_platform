@@ -136,7 +136,7 @@
         </repeat>
       </view>
     </view>
-    <view class="commentInput">
+    <view class="commentInput" wx:if = {{talkVisit}}>
       <view>
         <input placeholder="{{placeholder}}" focus="{{focus}}" bindblur="bindBlur" />
         <button @tap="sendComment">发送</button>
@@ -162,6 +162,8 @@ export default class PioneerDetail extends wepy.page {
     commentNum: 0,
     commentList: [],
     companyId: 0,
+    javaServer: '',
+    talkVisit: 1,
   };
   methods = {
     goBack() {
@@ -189,6 +191,8 @@ export default class PioneerDetail extends wepy.page {
     }
   };
   onLoad(option) {
+    this.javaServer = javaServer;
+    this.$apply();
     if (option.id) {
       NetUtil.getJson(
         `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`
@@ -204,6 +208,7 @@ export default class PioneerDetail extends wepy.page {
         }
       );
     } else if (option.name) {
+      this.talkVisit = 0;
       NetUtil.getJson(
         `${javaServer}/api/pioneer/getPioneerDetail?name=${option.name}`
       ).then(data => {
