@@ -47,7 +47,7 @@
       <text class="userinfo-nickname">{{ userInfo.nickName }}</text>
     </view>
     <view class="info_list">
-			<view @tap="lookMyCompany">
+			<view @tap="lookMyCompany" wx:if="{{!this.$parent.globalData.userType}}">
 				<text>我的公司</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
@@ -55,7 +55,7 @@
 				<text>消息</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
-			<view @tap="lookMyApplication">
+			<view @tap="lookMyApplication" wx:if="{{this.$parent.globalData.userType == 2}}">
 				<text>申请</text>
 				<view class="backBtn zan-icon zan-icon-arrow"></view>
 			</view>
@@ -96,17 +96,26 @@ export default class User extends wepy.page {
       telephoneNumber: this.$parent.globalData.userInfo.nickName,
       userIcon: this.$parent.globalData.userInfo.avatarUrl
     }).then(data => {
-			console.log(data);
-			this.$parent.globalData.userType = data.data.data.user.userType;
+      console.log(data);
+      this.$parent.globalData.userType = data.data.data.userType;
       this.$parent.globalData.token = data.data.data.token;
+      this.$parent.globalData.userId = data.data.data.userId;
     });
   }
   lookMyCompany() {
-    wx.navigateTo({
-      url: `../pages/pioneerDetail?name=${
-        this.$parent.globalData.userInfo.nickName
-      }`
-    });
+    if (this.$parent.globalData.userType = 1) {
+      wx.navigateTo({
+        url: `../pages/pioneerDetail?name=${
+          this.$parent.globalData.userInfo.nickName
+        }`
+      });
+    } else {
+      wx.navigateTo({
+        url: `../pages/investmentDetail?name=${
+          this.$parent.globalData.userInfo.nickName
+        }`
+      });
+    }
   }
   lookMyApplication() {
     wx.navigateTo({

@@ -17,7 +17,8 @@ page {
 <script>
 import wepy from "wepy";
 import "wepy-async-function";
-import NetUtil from './util/netUtil'
+import NetUtil from "./util/netUtil";
+import javaServer from "./config";
 
 export default class extends wepy.app {
   config = {
@@ -75,8 +76,9 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    userType: null,
-    token: null
+    userType: null, // 空：wx用户； 1: 创业公司  2：投资机构
+    token: null,
+    userId: null
   };
 
   constructor() {
@@ -118,6 +120,18 @@ export default class extends wepy.app {
     wepy.getUserInfo({
       success(res) {
         that.globalData.userInfo = res.userInfo;
+        this.$apply();
+        NetUtil.postJson(`${javaServer}/api/sessions`, {
+          loginType: 1,
+          passwd: "",
+          telephoneNumber: this.$parent.globalData.userInfo.nickName,
+          userIcon: this.$parent.globalData.userInfo.avatarUrl
+        }).then(data => {
+          console.log(data);
+          this.$parent.globalData.userType = data.data.data.userType;
+          this.$parent.globalData.token = data.data.data.token;
+          this.$parent.globalData.userId = data.data.data.userId;
+        });
       }
     });
   }

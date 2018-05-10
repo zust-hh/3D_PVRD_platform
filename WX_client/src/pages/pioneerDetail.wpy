@@ -104,7 +104,7 @@
 </style>
 <template>
   <scroll-view scroll-y class="container">
-    <image class="bacImg" src="{{javaServer}}+{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
+    <image class="bacImg" src="{{javaServer}}{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
       <view class="zan-panel">

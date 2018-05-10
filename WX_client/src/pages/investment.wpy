@@ -3,7 +3,7 @@
 <template>
   <scroll-view scroll-y style="height:100%">
     <repeat for="{{list}}" key="index" index="index" item="item">
-        <OneCard :type="type" :id="item.id" :backgroundImage="item.backgroundImage" :companyName="item.companyName" :involvingIndustry="item.involvingIndustry" />
+        <OneCard :type="type" :id="item.companyId" :backgroundImage="item.bookImg" :companyName="item.companyName" :involvingIndustry="item.companyTags" />
     </repeat>
   </scroll-view>
 </template>
@@ -28,7 +28,7 @@ export default class Investment extends wepy.page {
   events = {
   };
   onLoad() {
-    NetUtil.getJson(`${javaServer}/api/investCompany/getInvestCompanyList`).then(data => {
+    NetUtil.getJson(`${javaServer}/api/pioneer/getPioneertouziList`).then(data => {
       this.list = data.data;
       this.$apply();
     });

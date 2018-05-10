@@ -53,28 +53,28 @@
 </style>
 <template>
   <scroll-view scroll-y class="container">
-    <image class="bacImg" src="../images/test.png" @tap="show"></image>
+    <image class="bacImg" src="{{javaServer}}{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
       <view class="zan-panel">
         <view class="zan-cell">
           <view class="zan-cell__bd">投资机构名称：
-            <text>{{companyName}}</text>
+            <text>{{companyDetail.companyName}}</text>
           </view>
         </view>
         <view class="zan-cell">
           <view class="zan-cell__bd">投资机构CEO：
-            <text>{{companyCEO}}</text>
+            <text>{{companyDetail.companyCeo}}</text>
           </view>
         </view>
         <view class="zan-cell">
           <view class="zan-cell__bd">投资机构简介：
-            <text>{{companyProfile}}</text>
+            <text>{{companyDetail.companyDescription}}</text>
           </view>
         </view>
       </view>
     </view>
-    <button class="apply-btn" @tap="apply">申请投资</button>
+    <button class="apply-btn" @tap="apply"  wx:if="{{this.$parent.globalData.userType == 1}}">申请投资</button>
   </scroll-view>
 </template>
 
@@ -87,10 +87,9 @@ export default class InvestmentDetail extends wepy.page {
   components = {
   };
   data = {
-    companyName: '3D创业公司',
-    companyCEO: '王国庆',
-    companyProfile: '这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！这是家好的投资行！！！',
-  };
+    companyDetail: {},
+    companyId: 0,
+    };
   methods = {
     goBack() {
       wx.navigateBack({
@@ -110,12 +109,22 @@ export default class InvestmentDetail extends wepy.page {
   };
   events = {};
   onLoad(option) {
-    NetUtil.getJson(
-      `${javaServer}/api/investCompany/getInvestCompanyDetail?id=${option.id}`
-    ).then(data => {
-      this.commentList = data.data;
-      this.$apply();
-    });
+    if (option.id) {
+      NetUtil.getJson(
+        `${javaServer}/api/pioneer/getPioneerDetail?id=${option.id}`
+      ).then(data => {
+        this.companyDetail = data.data;
+        this.companyId = data.data.companyId;
+        this.$apply();
+      });
+    } else if (option.name) {
+      NetUtil.getJson(
+        `${javaServer}/api/pioneer/getPioneerDetail?name=${option.name}`
+      ).then(data => {
+        this.companyDetail = data.data;
+        this.$apply();
+      });
+    }
   }
 }
 </script>
