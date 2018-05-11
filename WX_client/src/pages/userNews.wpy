@@ -63,7 +63,6 @@ export default class UserNews extends wepy.page {
   onLoad() {
     NetUtil.getJson(`${javaServer}/api/message?name=${this.$parent.globalData.userInfo.nickName}`)
     .then(data => {
-      console.log(data.data[0].userAName);
       this.applicationList = data.data;
       this.$apply();
     });

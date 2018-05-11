@@ -138,7 +138,7 @@
     </view>
     <view class="commentInput" wx:if = {{talkVisit}}>
       <view>
-        <input placeholder="{{placeholder}}" focus="{{focus}}" bindblur="bindBlur" />
+        <input placeholder="{{placeholder}}" focus="{{focus}}" bindblur="bindBlur"  bindinput="bindKeyInput" />
         <button @tap="sendComment">发送</button>
       </view>
     </view>
@@ -164,6 +164,8 @@ export default class PioneerDetail extends wepy.page {
     companyId: 0,
     javaServer: '',
     talkVisit: 1,
+    inputValue: "",
+    publisher: '',
   };
   methods = {
     goBack() {
@@ -179,6 +181,10 @@ export default class PioneerDetail extends wepy.page {
     bindBlur() {
       this.placeholder = "输入评论";
       this.focus = false;
+    },
+    bindKeyInput: function(e) {
+      this.inputValue = e.detail.value;
+      this.$apply();
     },
     sendComment() {
       console.log("发送");

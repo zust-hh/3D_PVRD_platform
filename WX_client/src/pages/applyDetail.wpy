@@ -68,18 +68,21 @@ textarea {
       </view>
       <button class="apply-btn" @tap="apply">确认申请</button>
     </view>
+    <zanToast></zanToast>
   </scroll-view>
 </template>
 
 <script>
 import wepy from "wepy";
 import zanField from '../ui/components/zan-field';
+import zanToast from '../ui/components/zan-toast'
 
 export default class ApplyDetail extends wepy.page {
   components = {
     zanField1: zanField,
     zanField2: zanField,
     zanField3: zanField,
+    zanToast,
   };
   data = {
     companyName: {
@@ -105,7 +108,7 @@ export default class ApplyDetail extends wepy.page {
       applyUser: this.$parent.globalData.userId,
       applyCompanyId: id,
     }).then(data => {
-			// 
+			this.$invoke('zanToast', 'showZanToast', { title: '申请成功，请前往后台查看进度！', timeout: 2000 });
     });
     }
   }

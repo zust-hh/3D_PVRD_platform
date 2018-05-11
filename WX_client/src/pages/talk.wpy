@@ -80,7 +80,7 @@
     <view class="talk-button zan-icon zan-icon-add" @tap="showWriteHandle"></view>
     <view class="talkInput" wx:if="{{showWrite}}">
       <view>
-        <input placeholder="{{placeholder}}" focus="{{showWrite}}" bindblur="bindBlur" />
+        <input placeholder="{{placeholder}}" focus="{{showWrite}}" bindblur="bindBlur" bindinput="bindKeyInput" />
         <button @tap="sendTalk">发送</button>
       </view>
     </view>
@@ -101,7 +101,9 @@ export default class Talk extends wepy.page {
     showWrite: false,
     placeholder: "输入评论",
     commentList: [],
-    avatar: '',
+    avatar: "",
+    inputValue: "",
+    publisher: '',
   };
   events = {
     inputFocus(publisher) {
@@ -121,7 +123,16 @@ export default class Talk extends wepy.page {
       this.showWrite = true;
     },
     bindBlur() {
+      this.publisher = '';
       this.showWrite = false;
+      this.$apply();
+    },
+    bindKeyInput: function(e) {
+      this.inputValue = e.detail.value;
+      this.$apply();
+    },
+    sendTalk() {
+      
     }
   };
   onLoad() {

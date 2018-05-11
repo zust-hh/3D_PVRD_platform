@@ -74,7 +74,7 @@
         </view>
       </view>
     </view>
-    <button class="apply-btn" @tap="apply"  wx:if="{{this.$parent.globalData.userType == 1}}">申请投资</button>
+    <button class="apply-btn" @tap="apply"  wx:if="{{this.$parent.globalData.userType == 'chuangye'}}">申请投资</button>
   </scroll-view>
 </template>
 

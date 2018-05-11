@@ -2,7 +2,7 @@
 </style>
 <template>
   <scroll-view scroll-y style="height:100%">
-    <repeat for="{{list}}" key="index" index="index" item="item">
+    <repeat for="{{list}}" key="index" index="index" item="item" wx:if="{{list}}">
         <OneCard :type="type" :id="item.companyId" :backgroundImage="item.bookImg" :companyName="item.companyName" :involvingIndustry="item.companyTags" />
     </repeat>
   </scroll-view>
@@ -13,10 +13,12 @@ import wepy from "wepy";
 import OneCard from '../components/oneCard'
 import NetUtil from "../util/netUtil";
 import javaServer from "../config";
+import zanToast from '../ui/components/zan-toast'
 
 export default class Investment extends wepy.page {
   components = {
     OneCard,
+    zanToast,
   };
   data = {
     type: 'investment',
@@ -28,6 +30,9 @@ export default class Investment extends wepy.page {
   events = {
   };
   onLoad() {
+    if(!this.list) {
+      this.$invoke('zanToast', 'showZanToast', { title: '加载中。。。', timeout: 2000 });
+    }
     NetUtil.getJson(`${javaServer}/api/pioneer/getInvestList`).then(data => {
       this.list = data.data;
       this.$apply();

@@ -3,9 +3,10 @@
 </style>
 <template>
   <scroll-view scroll-y style="height:100%">
-    <repeat for="{{list}}" key="index" index="index" item="item">
+    <repeat for="{{list}}" key="index" index="index" item="item" wx:if="{{list}}">
         <OneCard :type="type" :id="item.companyId" :backgroundImage="item.bookImg" :companyName="item.companyName" :involvingIndustry="item.companyTags" />
     </repeat>
+    <zanToast></zanToast>
   </scroll-view>
 </template>
 
@@ -14,32 +15,29 @@ import wepy from "wepy";
 import OneCard from "../components/oneCard";
 import NetUtil from "../util/netUtil";
 import javaServer from "../config";
+import zanToast from '../ui/components/zan-toast'
 
 export default class Pioneer extends wepy.page {
   components = {
-    OneCard
+    OneCard,
+    zanToast
   };
   data = {
     type: "pioneer",
-    list: [
-      {
-        companyId: 1,
-        bookImg: "../images/avatar.png",
-        companyName: "123",
-        companyTags: "nihao"
-      }
-    ]
+    list: []
   };
   methods = {};
   events = {};
   onLoad() {
+    if(!this.list) {
+      this.$invoke('zanToast', 'showZanToast', { title: '加载中。。。', timeout: 2000 });
+    }
     NetUtil.getJson(`${javaServer}/api/pioneer/getPioneerList`).then(data => {
       this.list = data.data;
       this.$apply();
     });
     wx.getUserInfo({
       success: res => {
-        console.log(res);
         this.$parent.globalData.userInfo = res.userInfo;
         NetUtil.postJson(`${javaServer}/api/sessions`, {
           loginType: 1,
