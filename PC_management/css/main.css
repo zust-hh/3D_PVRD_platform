@@ -3897,3 +3897,6 @@ p, .table, .alert, .carousel {
 .hidden {
     display: none;
 }
+.status {
+    display: none;
+}

@@ -86,7 +86,7 @@
                 </a>
               </li>
               <li>
-                <a href="processforchuangye.html">
+                <a href="processforchuangye.html" class="status">
                   <i class="gi gi-more_items sidebar-nav-icon"></i>
                   <span class="sidebar-nav-mini-hide">申请投资</span>
                 </a>
@@ -150,7 +150,7 @@
                   <strong>XXX</strong>
                 </li>
                 <li>
-                  <a href="login.html">
+                  <a href="#" class="clear">
                     <i class="fa fa-power-off fa-fw pull-right"></i>
                     注销
                   </a>
@@ -234,12 +234,29 @@
   <!-- jQuery, Bootstrap, jQuery plugins and Custom JS code -->
   <script src="js/vendor/jquery-2.2.4.min.js"></script>
   <script src="js/vendor/bootstrap.min.js"></script>
-  
+  <script src="js/plugins.js"></script>
   <script src="js/app.js"></script>
   <script src="js/pages/uiTables.js"></script>
   <script>
+    if(window.localStorage.length == 0){
+      window.location.href = "login.html";
+    }
     $(function () {
-      UiTables.init();
+      // UiTables.init();
+    });
+    //控制申请投资页面的显示
+    if(localStorage.userType == 'chuangye'){
+      $(".status").show();
+      $(".status").attr("href","processforchuangye.html")
+    }else if(localStorage.userType == 'touzi'){
+      $(".status").show();
+      $(".status").attr("href","processfortouzi.html")
+    }
+
+    //注销
+    $(".clear").click(function(){
+      localStorage.clear();
+      window.location.href = "login.html";
     });
   </script>
   <script>
@@ -251,6 +268,7 @@
       },
       dataType: 'JSON',
       success: function(data){
+        console.log(data)
         for(var i=0;i<data.arr.length;i++){
           if(data.arr[i].company_type == 1){
             data.arr[i].company_type = '创业公司';
@@ -261,6 +279,7 @@
           var content = "<tr><td class='text-center'>"+i+"</td><td class='text-center'><strong>"+data.arr[i].company_ceo+"</strong></td><td class='text-center'>"+data.arr[i].company_name+"</td><td class='text-center'><span>"+data.arr[i].company_type+"</span></td><td class='text-center'><span>"+data.arr[i].company_description+"</span></td><td class='text-center'><a href='javascript:agree("+data.arr[i].user_id+")' data-toggle='tooltip' title='通过' class='btn btn-effect-ripple btn-xs btn-success'><i class='fa fa-check'></i></a><a href='javascript:disagree("+data.arr[i].user_id+")' data-toggle='tooltip' title='不通过' class='btn btn-effect-ripple btn-xs btn-danger'><i class='fa fa-times'></i></a></td></tr>"
           $(".parter").append(content);
         }
+        UiTables.init();
       }
       
     })
@@ -303,7 +322,7 @@
     })
     }
   </script>
-  <script src="js/plugins.js"></script>
+  
 </body>
 
 </html>
