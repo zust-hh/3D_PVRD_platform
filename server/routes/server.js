@@ -5,6 +5,7 @@ var mysql = require('mysql');
 var dbConfig = require('../db/DBConfig');
 var company = require('../db/company');
 var apply = require('../db/applysql');
+var commentsql = require('../db/commentsql')
 // 使用DBConfig.js的配置信息创建一个MySQL连接池
 var pool = mysql.createPool(dbConfig.mysql);
 // 响应一个JSON数据
@@ -104,13 +105,13 @@ router.post('/searchInapplyCompany', function (req, res, next) {
         // 建立连接 增加一个用户信息 
         connection.query(apply.getInapplyByStatus, ['待审核'], function (err, result) {
 
-            if (result.length>0) {
+            if (result.length > 0) {
                 //查找所有待审核的公司信息。
                 for (var i = 0; i < result.length; i++) {
                     getresult(result, i);
                 }
 
-            }else{
+            } else {
                 responseJSON(res, calljson);
             }
 
@@ -359,4 +360,146 @@ router.post('/disAgreeApply', function (req, res, next) {
     });
 
 });
+//通过公司id获得总评论和子评论
+router.post('/getComments', function (req, res, next) {
+
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '请求成功';
+    calljson.arr = [];
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+        // 建立连接 增加一个用户信息 
+        connection.query(commentsql.getCommentsByCompanyId, [param.companyId], function (err, result) {
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].comment_company_id != param.companyId) {
+                    result.splice(i, 1)
+                }
+            }
+            for (var i = 0; i < result.length; i++) {
+                getSubComment(result, i, connection);
+            }
+
+        });
+    });
+
+    function getSubComment(firstResult, i, connection) {
+        console.log(firstResult[i].comment_id)
+        connection.query(commentsql.getSubCommengsByCommentsId, firstResult[i].comment_id, function (err, result) {
+            console.log(result)
+            firstResult[i].subComment = result;
+            calljson.arr.push(firstResult[i]);
+            if (i == firstResult.length - 1) {
+                responseJSON(res, calljson);
+                connection.release();
+            }
+        });
+    }
+});
+//插入主评论
+router.post('/submitComment', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '请求成功';
+    calljson.arr = [];
+    console.log(1)
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+        // 建立连接 增加一个用户信息 
+        var time = new Date()
+        connection.query(commentsql.submitComment, [param.commentUserId, param.commentContent, param.commentCompanyId, time], function (err, result) {
+            if(result){
+                responseJSON(res, calljson);
+            }
+            
+            connection.release();
+
+        });
+    });
+
+
+});
+//插入子评论
+router.post('/submitSubComment', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '提交成功';
+    calljson.arr = [];
+    var time = new Date()
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+        // 建立连接 增加一个用户信息 
+        connection.query(commentsql.submitSubComment, [param.commentId, param.Aname, param.Bname, param.subCommentContent,time], function (err, result) {
+            console.log(result);
+            if(result){
+                responseJSON(res, calljson);
+            }else{
+                console.log(err);
+            }
+            
+            connection.release();
+
+        });
+    });
+
+
+});
+
+//小程序端创业公司申请投资
+router.post('/applyTouZi', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '提交成功';
+    calljson.arr = [];
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+        // 建立连接 增加一个用户信息 
+        connection.query(apply.insertApplyTouZi, [param.applyUserId, param.applyCompanyId], function (err, result) {
+            console.log(result);
+            if(result){
+                responseJSON(res, calljson);
+            }else{
+                console.log(err);
+            }
+            
+            connection.release();
+
+        });
+    });
+
+
+});
+//判断用户是否申请过该投资公司
+router.post('/ifApplyTouZi', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '查询成功';
+    calljson.arr = [];
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+        // 建立连接 增加一个用户信息 
+        connection.query(apply.selectIfApplyTouZi, [param.applyUserId, param.applyCompanyId], function (err, result) {
+            console.log(result);
+            if(result){
+                calljson.application = '已申请'
+                responseJSON(res, calljson);
+            }else if(result.length == 0){
+                calljson.application = '未申请'
+                console.log(calljson)
+                responseJSON(res, calljson);
+            }
+            
+            connection.release();
+
+        });
+    });
+
+
+});
+
 module.exports = router;
