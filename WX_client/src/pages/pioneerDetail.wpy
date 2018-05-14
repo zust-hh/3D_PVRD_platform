@@ -136,12 +136,13 @@
         </repeat>
       </view>
     </view>
-    <view class="commentInput" wx:if = {{talkVisit}}>
+    <view class="commentInput" wx:if = "{{talkVisit}}">
       <view>
         <input placeholder="{{placeholder}}" focus="{{focus}}" bindblur="bindBlur"  bindinput="bindKeyInput" />
         <button @tap="sendComment">发送</button>
       </view>
     </view>
+    <zanToast></zanToast>
   </scroll-view>
 </template>
 
@@ -150,10 +151,12 @@ import wepy from "wepy";
 import OneComment from "../components/oneComment";
 import NetUtil from "../util/netUtil";
 import javaServer from "../config";
+import zanToast from '../ui/components/zan-toast'
 
 export default class PioneerDetail extends wepy.page {
   components = {
-    OneComment
+    OneComment,
+    zanToast
   };
   data = {
     focus: false,
@@ -162,10 +165,11 @@ export default class PioneerDetail extends wepy.page {
     commentNum: 0,
     commentList: [],
     companyId: 0,
-    javaServer: '',
+    commentId: 0,
+    javaServer: "",
     talkVisit: 1,
     inputValue: "",
-    publisher: '',
+    publisher: ""
   };
   methods = {
     goBack() {
@@ -187,13 +191,51 @@ export default class PioneerDetail extends wepy.page {
       this.$apply();
     },
     sendComment() {
-      console.log("发送");
+      if (this.inputValue && !this.publisher) {
+        NetUtil.postJson("http://192.168.43.214:8888/server/submitComment", {
+          commentUserId: this.$parent.globalData.userId,
+          commentContent: this.inputValue,
+          commentCompanyId: this.companyId
+        }).then(data => {
+          NetUtil.getJson(
+            `${javaServer}/api/comment?id=${this.companyId}`
+          ).then(data => {
+            this.commentId = 0;
+            this.talkVisit = 0;
+            this.inputValue = "";
+            this.commentList = data.data;
+            this.$apply();
+            this.$invoke('zanToast', 'showZanToast', { title: '评论成功', timeout: 2000 });
+          });
+        });
+      } else if (this.inputValue && this.publisher) {
+        NetUtil.postJson("http://192.168.43.214:8888/server/submitSubComment", {
+          commentId: this.commentId,
+          Aname: this.$parent.globalData.userInfo.nickName,
+          Bname: this.publisher,
+          subCommentContent: this.inputValue,
+        }).then(data => {
+          NetUtil.getJson(
+            `${javaServer}/api/comment?id=${this.companyId}`
+          ).then(data => {
+            this.commentId = 0;
+            this.talkVisit = 0;
+            this.inputValue = "";
+            this.commentList = data.data;
+            this.$apply();
+            this.$invoke('zanToast', 'showZanToast', { title: '回复成功', timeout: 2000 });
+          });
+        });
+      }
     }
   };
   events = {
-    inputFocus(publisher) {
+    inputFocus(commentId, publisher) {
       this.placeholder = `回复${publisher}：`;
+      this.publisher = publisher;
+      this.commentId = commentId;
       this.focus = true;
+      this.$apply();
     }
   };
   onLoad(option) {

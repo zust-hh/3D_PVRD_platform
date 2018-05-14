@@ -15,7 +15,6 @@ export default class threeD extends wepy.page {
   }
   events = {};
   onLoad(option) {
-    console.log(option.id);
     this.webUrl = `file:///Users/didi/Documents/project/threeJs/3d_panorama.html?${option.id}`
     this.$apply();
   }

@@ -198,7 +198,7 @@ export default class zanActionsheet extends wepy.component {
       const { index, type } = dataset
       const action = this.zanActionsheet.actions[index]
 
-      console.log(`item index ${index} clicked`)
+      // console.log(`item index ${index} clicked`)
 
       // 如果是分享按钮被点击, 不处理关闭
       if (type === 'share') {

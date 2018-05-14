@@ -28,7 +28,7 @@ export default class zanToptips extends wepy.component {
   }
   methods = {
     showZanTopTips({ content = '', options = {} }, event) {
-      console.log('showZanTopTips', content, options)
+      // console.log('showZanTopTips', content, options)
       let topTips = this.topTips || {}
       // 如果已经有一个计时器在了，就清理掉先
       if (topTips.timer) {
