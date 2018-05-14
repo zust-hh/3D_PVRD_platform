@@ -42,7 +42,7 @@
 }
 </style>
 <template>
-  <view class="one-talk" @tap="inputFocus({{publisher}})">
+  <view class="one-talk" @tap="inputFocus({{id}},{{publisher}})">
     <view class="one-talk-left">
       <image class="talkAvatar" src="{{avatar}}"></image>
     </view>
@@ -53,12 +53,12 @@
           <text class="talkContent">{{talkContent}}</text>
         </view>
         <view>
-          <text class="releaseTime">{{releaseTime}}</text>
+          <text class="releaseTime">{{releaseT}}</text>
         </view>
       </view>
       <view class="one-talk-replyList">
         <repeat for="{{replyList}}" key="index" index="index" item="item">
-          <view class="one-reply" catchtap="inputFocus({{item.userAName}})">
+          <view class="one-reply" catchtap="inputFocus({{item.commentId}},{{item.userAName}})">
             <text>{{item.userAName}}@{{item.userBName}}：{{item.subCommentContent}}</text>
           </view>
         </repeat>
@@ -80,6 +80,7 @@
     }
 
     data = {
+      releaseT: '',
     }
     events = {
     }
@@ -88,11 +89,15 @@
     }
 
     methods = {
-      inputFocus(publisher) {
-        this.$emit('inputFocus', publisher);
+      inputFocus(commentId, publisher) {
+        this.$emit('inputFocus', commentId, publisher);
       }
     }
     onLoad () {
+      let newDate = new Date();
+      newDate.setTime(this.props.releaseTime * 1000);
+      this.releaseT = newDate.toISOString().slice(0,16);
+      this.$apply();
     }
   }
 </script>

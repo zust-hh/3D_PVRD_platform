@@ -1,6 +1,6 @@
 <style lang="scss">
 @import "../ui/zanui/icon.scss";
-@import '../ui/zanui/panel.scss';
+@import "../ui/zanui/panel.scss";
 .backBtn {
   margin-top: 30px;
   color: white;
@@ -66,7 +66,7 @@ textarea {
       <view class="zan-panel">
         <textarea auto-height />
       </view>
-      <button class="apply-btn" @tap="apply">确认申请</button>
+      <button class="apply-btn" @tap="applys">确认申请</button>
     </view>
     <zanToast></zanToast>
   </scroll-view>
@@ -74,28 +74,30 @@ textarea {
 
 <script>
 import wepy from "wepy";
-import zanField from '../ui/components/zan-field';
-import zanToast from '../ui/components/zan-toast'
+import zanField from "../ui/components/zan-field";
+import NetUtil from "../util/netUtil";
+import zanToast from "../ui/components/zan-toast";
 
 export default class ApplyDetail extends wepy.page {
   components = {
     zanField1: zanField,
     zanField2: zanField,
     zanField3: zanField,
-    zanToast,
+    zanToast
   };
   data = {
     companyName: {
-      title: '公司名称：',
+      title: "公司名称："
     },
     companyCEO: {
-      title: '公司CEO：',
+      title: "公司CEO："
     },
     companyPro: {
-      title: '公司产品：',
+      title: "公司产品："
     },
-    value: 'test',
-    textareaValue: 'test textarea',
+    value: "test",
+    textareaValue: "test textarea",
+    companyId: 0
   };
   methods = {
     goBack() {
@@ -103,15 +105,25 @@ export default class ApplyDetail extends wepy.page {
         delta: 1
       });
     },
-    apply(id) {
-      NetUtil.postJson(`${javaServer}/api/apply`, {
-      applyUser: this.$parent.globalData.userId,
-      applyCompanyId: id,
-    }).then(data => {
-			this.$invoke('zanToast', 'showZanToast', { title: '申请成功，请前往后台查看进度！', timeout: 2000 });
-    });
+    applys() {
+      NetUtil.postJson("http://192.168.43.214:8888/server/applyTouZi", {
+        applyUserId: this.$parent.globalData.userId,
+        applyCompanyId: this.companyId
+      }).then(data => {
+        this.$invoke("zanToast", "showZanToast", {
+          title: "申请成功，请前往后台查看进度！",
+          timeout: 2000
+        });
+        wx.navigateBack({
+          delta: 1
+        });
+      });
     }
-  }
+  };
   events = {};
+  onLoad(option) {
+    this.companyId = option.id;
+    this.$apply();
+  }
 }
 </script>

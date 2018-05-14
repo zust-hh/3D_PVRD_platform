@@ -74,7 +74,8 @@
         </view>
       </view>
     </view>
-    <button class="apply-btn" @tap="apply"  wx:if="{{this.$parent.globalData.userType == 'chuangye'}}">申请投资</button>
+    <button class="apply-btn" @tap="apply"  wx:if="{{userType == 'chuangye'}}">申请投资</button>
+    <zanToast></zanToast>
   </scroll-view>
 </template>
 
@@ -82,34 +83,48 @@
 import wepy from "wepy";
 import NetUtil from "../util/netUtil";
 import javaServer from "../config";
+import zanToast from '../ui/components/zan-toast'
 
 export default class InvestmentDetail extends wepy.page {
   components = {
+    zanToast
   };
   data = {
     companyDetail: {},
     companyId: 0,
-    javaServer: '',
-    };
+    javaServer: "",
+    userType: ""
+  };
   methods = {
     goBack() {
       wx.navigateBack({
         delta: 1
       });
     },
-    show() {
+    show(id) {
       wx.navigateTo({
-        url: './threeD'
-      })
+        url: `./threeD?id=${id}`
+      });
     },
     apply() {
-      wx.navigateTo({
-        url: './applyDetail'
-      })
+      NetUtil.postJson("http://192.168.43.214:8888/server/ifApplyTouZi", {
+        applyUserId: this.$parent.globalData.userId,
+        applyCompanyId: this.companyId
+      }).then(data => {
+        if (data.data.application == "已申请") {
+          this.$invoke('zanToast', 'showZanToast', { title: '您已申请过该公司', timeout: 2000 });
+          return;
+        } else {
+          wx.navigateTo({
+            url: `./applyDetail?id=${this.companyId}`
+          });
+        }
+      });
     }
   };
   events = {};
   onLoad(option) {
+    this.userType = this.$parent.globalData.userType;
     this.javaServer = javaServer;
     this.$apply();
     if (option.id) {
