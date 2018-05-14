@@ -45,9 +45,9 @@ export default class Pioneer extends wepy.page {
           telephoneNumber: this.$parent.globalData.userInfo.nickName,
           userIcon: this.$parent.globalData.userInfo.avatarUrl
         }).then(data => {
-          this.$parent.globalData.userType = data.data.data.userType;
+          this.$parent.globalData.userType = data.data.data.user.userType;
           this.$parent.globalData.token = data.data.data.token;
-          this.$parent.globalData.userId = data.data.data.userId;
+          this.$parent.globalData.userId = data.data.data.user.userId;
         });
       }
     });

@@ -64,7 +64,7 @@ textarea {
       </view>
       <view class="zan-panel-title">公司简介</view>
       <view class="zan-panel">
-        <textarea auto-height />
+        <textarea auto-height></textarea>
       </view>
       <button class="apply-btn" @tap="applys">确认申请</button>
     </view>

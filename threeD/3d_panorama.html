@@ -131,11 +131,18 @@
 		var lon = 90, lat = 0;
 		var phi = 0, theta = 0;
 		var touchX, touchY;
-		var javaServer = "http://192.168.43.232:8080";
+		var javaServer = "http://192.168.43.214:8080";
+		var sceneList = [];
 		var url = location.search; 
 		if (url.indexOf("?") != -1) {
 			var str = url.substr(1); //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串就是id
-			
+			await $.ajax({
+				url: `${javaServer}/api/scenes?id=${}`,
+				success: function (data) {
+					console.log(data);
+					sceneList = data[0].imgList;
+				}
+			});
 		}
 		var img = ["./negx.jpg", "./negy.jpg", "./negz.jpg"];
 		init(1);
@@ -148,13 +155,7 @@
 		async function init(id) {
 			camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 			scene = new THREE.Scene();
-			// var imageUrl = [];
-			// await $.ajax({
-			// 	url: `${javaServer}/api/scenes?id=1`,
-			// 	success: function (data) {
-			// 		imageUrl = data[0].imgList;
-			// 	}
-			// });
+			
 			var imgurl = "";
 			if (id) {
 				imgurl = img[id - 1];

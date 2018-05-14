@@ -132,7 +132,7 @@
           </view>
         </view>
         <repeat for="{{commentList}}" key="index" index="index" item="item">
-          <OneComment :id="item.comment.commentId" :avatar="item.comment.userIcon" :publisher="item.comment.userWx" :releaseTime="item.comment.comentTime" :commentContent="item.comment.commentContent" :replyList="item.subcomments" />
+          <OneComment :id="item.comment.commentId" :avatar="item.comment.userIcon" :publisher="item.comment.userWx" :releaseTime="item.comment.commentTimeStr" :commentContent="item.comment.commentContent" :replyList="item.subcomments" />
         </repeat>
       </view>
     </view>
@@ -234,6 +234,7 @@ export default class PioneerDetail extends wepy.page {
       this.placeholder = `回复${publisher}：`;
       this.publisher = publisher;
       this.commentId = commentId;
+      this.talkVisit = 1;
       this.focus = true;
       this.$apply();
     }

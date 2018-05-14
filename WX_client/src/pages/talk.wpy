@@ -74,7 +74,7 @@
     <image class="avatar" src="{{avatar}}"></image>
     <view class="talk-detail">
       <repeat for="{{commentList}}" key="index" index="index" item="item">
-        <OneTalk :id="item.comment.commentId" :avatar="item.comment.userIcon" :publisher="item.comment.userWx" :releaseTime="item.comment.comentTime" :talkContent="item.comment.commentContent" :replyList="item.subcomments" />
+        <OneTalk :id="item.comment.commentId" :avatar="item.comment.userIcon" :publisher="item.comment.userWx" :releaseTime="item.comment.commentTimeStr" :talkContent="item.comment.commentContent" :replyList="item.subcomments" />
       </repeat>
     </view>
     <view class="talk-button zan-icon zan-icon-add" @tap="showWriteHandle"></view>

@@ -13,6 +13,9 @@
   width: 40px;
   margin-right: 5px;
 }
+.one-talk-right {
+  width: calc(100% - 60px);
+}
 .talkAvatar {
   width: 30px;
   height: 30px;
@@ -36,6 +39,7 @@
   font-size: 11px;
 }
 .one-reply {
+  width: 100%;
   padding: 3px 3px;
   background-color: #eee;
   border-bottom: 1px solid #dedede;
@@ -53,7 +57,7 @@
           <text class="talkContent">{{talkContent}}</text>
         </view>
         <view>
-          <text class="releaseTime">{{releaseT}}</text>
+          <text class="releaseTime">{{releaseTime}}</text>
         </view>
       </view>
       <view class="one-talk-replyList">
@@ -94,10 +98,13 @@
       }
     }
     onLoad () {
-      let newDate = new Date();
-      newDate.setTime(this.props.releaseTime * 1000);
-      this.releaseT = newDate.toISOString().slice(0,16);
-      this.$apply();
+    //   console.log(typeof this.props.releaseTime);
+    // if (typeof this.props.releaseTime == "number") {
+    //   let newDate = new Date();
+    //   newDate.setTime(this.props.releaseTime * 1000);
+    //   this.releaseT = newDate.toISOString().slice(0,16);
+    //   this.$apply();
+    // }
     }
   }
 </script>

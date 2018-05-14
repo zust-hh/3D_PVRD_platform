@@ -50,7 +50,7 @@
     <view class="one-comment-head">
       <image class="avatar" src="{{avatar}}"></image>
       <text class="publisher">{{publisher}}</text>
-      <text class="releaseTime">{{releaseT}}</text>
+      <text class="releaseTime">{{releaseTime}}</text>
     </view>
     <view class="one-comment-content">
       <text class="commentContent">{{commentContent}}</text>
@@ -65,37 +65,38 @@
   </view>
 </template>
 <script>
-  import wepy from 'wepy'
+import wepy from "wepy";
 
-  export default class OneComment extends wepy.component {
-    props = {
-      id: Number,
-      avatar: String,
-      publisher: String,
-      releaseTime: String,
-      commentContent: String,
-      replyList: Array,
-    }
+export default class OneComment extends wepy.component {
+  props = {
+    id: Number,
+    avatar: String,
+    publisher: String,
+    releaseTime: String,
+    commentContent: String,
+    replyList: Array
+  };
 
-    data = {
-      releaseT: '',
-    }
-    events = {
-    }
+  data = {
+    releaseT: ""
+  };
+  events = {};
 
-    watch = {
-    }
+  watch = {};
 
-    methods = {
-      inputFocus(commentId, publisher) {
-        this.$emit('inputFocus', commentId, publisher);
-      }
+  methods = {
+    inputFocus(commentId, publisher) {
+      this.$emit("inputFocus", commentId, publisher);
     }
-    onLoad () {
-      let newDate = new Date();
-      newDate.setTime(this.props.releaseTime * 1000);
-      this.releaseT = newDate.toISOString().slice(0,16);
-      this.$apply();
-    }
+  };
+  onLoad() {
+    // console.log(this.id,this.releaseTime);
+    // if (typeof this.props.releaseTime == "number") {
+    //   let newDate = new Date();
+    //   newDate.setTime(this.props.releaseTime * 1000);
+    //   this.releaseT = newDate.toISOString().slice(0,16);
+    //   this.$apply();
+    // }
   }
+}
 </script>

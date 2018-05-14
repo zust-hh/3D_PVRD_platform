@@ -78,6 +78,13 @@
       width: 100%;
       height: 100%;
     }
+
+    #back {
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      z-index: 9999;
+    }
   </style>
 </head>
 
@@ -85,26 +92,12 @@
   <div id="scene-body">
 
   </div>
+  <div id="back">
+    <img src="./left.png" alt="back">
+  </div>
   <div class="scene-bar">
     <div id="scene-container">
-      <div class="one-scene" onclick="switchScene(1)">
-        <img src="./negz.jpg" alt="全景预览图">
-        <div class="scene-name">
-          <span>场景1</span>
-        </div>
-      </div>
-      <div class="one-scene" onclick="switchScene(2)">
-        <img src="./negx.jpg" alt="全景预览图">
-        <div class="scene-name">
-          <span>场景2</span>
-        </div>
-      </div>
-      <div class="one-scene" onclick="switchScene(3)">
-        <img src="./posz.jpg" alt="全景预览图">
-        <div class="scene-name">
-          <span>场景3</span>
-        </div>
-      </div>
+
     </div>
   </div>
   <script src="./three.min.js"></script>
@@ -112,13 +105,18 @@
   <script src="./jquery.js"></script>
   <script type="text/javascript" src="./wxJs.js"></script>
   <script>
+    $('#back').on('click', () => {
+			wx.miniProgram.navigateBack({
+				delta: 1,
+			})
+		})
     var camera, scene, renderer;
     var geometry, material, mesh;
     var target = new THREE.Vector3();
     var lon = 90, lat = 0;
     var phi = 0, theta = 0;
     var touchX, touchY;
-    var javaServer = "http://192.168.43.232:8080";
+    var javaServer = "http://192.168.43.214:8080";
     var url = location.search;
     var img = [];
     if (url.indexOf("?") != -1) {
@@ -127,12 +125,12 @@
         url: `${javaServer}/api/scenes?id=${str}`,
         success: function (data) {
           img = data;  // data最好是一个对象数组，一个里面放一个scene名和6张图的url
-          var imgLength = img.length();
+          var imgLength = img.length;
           for (let i = 0; i < imgLength; i++) {
-            let oneScene = `<div class="one-scene" onclick="switchScene(${i+1})">
-              <img src="${img[i].img[0]}" alt="全景预览图">
+            let oneScene = `<div class="one-scene" onclick="switchScene(${i + 1})">
+              <img src="${javaServer}/${img[i].imgList[0].imgUrl}" alt="全景预览图">
               <div class="scene-name">
-                <span>${img[i].name}</span>
+                <span>${img[i].sceneName}</span>
               </div>
             </div>`;
             $('#scene-container').append(oneScene);
@@ -152,32 +150,32 @@
       scene = new THREE.Scene();
       var sides = [
         {
-          url: img[id-1].img[0],
+          url: `${javaServer}${img[id - 1].imgList[0].imgUrl}`,
           position: [-512, 0, 0],
           rotation: [0, Math.PI / 2, 0]
         },
         {
-          url: img[id-1].img[1],
+          url: `${javaServer}${img[id - 1].imgList[1].imgUrl}`,
           position: [512, 0, 0],
           rotation: [0, -Math.PI / 2, 0]
         },
         {
-          url: img[id-1].img[2],
+          url: `${javaServer}${img[id - 1].imgList[2].imgUrl}`,
           position: [0, 512, 0],
           rotation: [Math.PI / 2, 0, Math.PI]
         },
         {
-          url: img[id-1].img[3],
+          url: `${javaServer}${img[id - 1].imgList[3].imgUrl}`,
           position: [0, -512, 0],
           rotation: [- Math.PI / 2, 0, Math.PI]
         },
         {
-          url: img[id-1].img[4],
+          url: `${javaServer}${img[id - 1].imgList[4].imgUrl}`,
           position: [0, 0, 512],
           rotation: [0, Math.PI, 0]
         },
         {
-          url: img[id-1].img[5],
+          url: `${javaServer}${img[id - 1].imgList[5].imgUrl}`,
           position: [0, 0, -512],
           rotation: [0, 0, 0]
         }
