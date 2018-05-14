@@ -19,5 +19,11 @@ var applysql = {
     getChuangYeByCompanyId:"SELECT * FROM apply where apply_company_id = ? and apply_status = '待审核'",
 
     updataApplyStatus:'UPDATE apply SET apply_status = ? WHERE apply_user_id = ? and apply_company_id = ?',
+
+    //小程序端创业公司申请投资
+    insertApplyTouZi:'INSERT INTO apply(apply_user_id,apply_company_id) VALUES(?,?)',
+
+    //判断用户是否申请过该投资公司
+    selectIfApplyTouZi:'SELECT * FROM apply where apply_company_id = ? and apply_user_id = ?',
   }
   module.exports = applysql;

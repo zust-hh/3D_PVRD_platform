@@ -7,6 +7,7 @@ var cors = require('cors');
 
 var usersRouter = require('./routes/users');
 var serverRouter = require('./routes/server');
+var commentsRouter = require('./routes/comments');
 
 var app = express();
 var allowCrossDomain = function(req, res, next) {
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/server', serverRouter);
+app.use('./comments',commentsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
