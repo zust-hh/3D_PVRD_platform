@@ -89,7 +89,7 @@
                 </a>
               </li>
               <li>
-                <a href="processforchuangye.html">
+                <a href="processforchuangye.html" class="status">
                   <i class="gi gi-more_items sidebar-nav-icon"></i>
                   <span class="sidebar-nav-mini-hide">申请投资</span>
                 </a>
@@ -153,7 +153,7 @@
                   <strong>XXX</strong>
                 </li>
                 <li>
-                  <a href="login.html">
+                  <a href="#" class="clear">
                     <i class="fa fa-power-off fa-fw pull-right"></i>
                     注销
                   </a>
@@ -445,7 +445,25 @@
 
   <!-- Load and execute javascript code used only in this page -->
   <script src="js/pages/readyDashboard.js"></script>
-  <script>$(function () { ReadyDashboard.init(); });</script>
+  <!-- <script>$(function () { ReadyDashboard.init(); });</script> -->
+  <script>
+    //控制申请投资页面的显示
+    if(localStorage.userType == 'chuangye'){
+      $(".status").show();
+      $(".status").attr("href","processforchuangye.html")
+    }else if(localStorage.userType == 'touzi'){
+      $(".status").show();
+      $(".status").attr("href","processfortouzi.html")
+    }
+
+    if(window.localStorage.length == 0){
+      window.location.href = "login.html";
+    }
+    $(".clear").click(function(){
+      localStorage.clear();
+      window.location.href = "login.html";
+    });
+  </script>
   <script>
     function upload(element) {
       $(element + " .btn-success").on('click', function (e) {

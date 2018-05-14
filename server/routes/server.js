@@ -104,12 +104,14 @@ router.post('/searchInapplyCompany', function (req, res, next) {
         // 建立连接 增加一个用户信息 
         connection.query(apply.getInapplyByStatus, ['待审核'], function (err, result) {
 
-            if (result) {
+            if (result.length>0) {
                 //查找所有待审核的公司信息。
                 for (var i = 0; i < result.length; i++) {
                     getresult(result, i);
                 }
 
+            }else{
+                responseJSON(res, calljson);
             }
 
             // 释放连接  
@@ -217,5 +219,144 @@ router.post('/delectInapply', function (req, res, next) {
 
 
     });
+});
+//查询创业公司申请投资公司的申请列表
+router.post('/chuangYeSelectApply', function (req, res, next) {
+    var param = req.body;
+    console.log(param)
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '请求成功';
+    calljson.arr = [];
+
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+
+        connection.query(company.getCompanyByUserId, [param.userId], function (err, result) {
+
+            calljson.companyCeo = result[0].company_ceo;
+            calljson.companyName = result[0].company_name;
+            connection.query(apply.getTouZistatusByUserId, [param.userId], function (err, result) {
+                console.log(11, result, err)
+                if (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        console.log(result.length)
+                        getCompany(result[i].apply_company_id, i, result.length, connection, result[i].apply_status);
+                    }
+                }
+
+            });
+
+
+        });
+
+
+    });
+    function getCompany(companyId, i, length, connection, status) {
+        connection.query(company.getCompanyById, [companyId], function (err, result) {
+            console.log(result);
+            calljson.arr[i] = result[0];
+            calljson.arr[i].apply_status = status;
+            if (i + 1 == length) {
+                responseJSON(res, calljson);
+                connection.release();
+            }
+        });
+    }
+});
+
+//查询申请的创业公司列表
+
+router.post('/touZiSelectApply', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '请求成功';
+    calljson.arr = [];
+
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+
+        connection.query(company.getCompanyByUserId, [param.userId], function (err, result) {
+            connection.query(apply.getChuangYeByCompanyId, [result[0].company_id], function (err, result) {
+                console.log(result)
+                if (result.length > 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        getCompany(result[i].apply_user_id, i, result.length, connection, result[i].apply_status);
+                    }
+                } else {
+                    responseJSON(res, calljson);
+                    connection.release();
+                }
+
+            });
+
+
+        });
+
+
+    });
+    function getCompany(userId, i, length, connection, status) {
+        connection.query(company.getCompanyByUserId, [userId], function (err, result) {
+            console.log(result, status);
+            for (var j = 0; j < result.length; j++) {
+                calljson.arr[i] = result[j];
+                calljson.arr[i].apply_status = status;
+            }
+
+            if (i + 1 == length) {
+                responseJSON(res, calljson);
+                connection.release();
+            }
+        });
+    }
+});
+//投资公司同意创业公司的申请
+
+router.post('/AgreeApply', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '请求成功';
+    calljson.arr = [];
+
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+
+        connection.query(company.getCompanyByUserId, [param.tZUserId], function (err, result) {
+            console.log(result, err)
+            connection.query(apply.updataApplyStatus, ['已通过', param.cYUserId, result[0].company_id], function (err, result) {
+
+                if (result) {
+                    responseJSON(res, calljson);
+                }
+            });
+        });
+    });
+
+});
+//投资公司拒绝创业公司的申请
+
+router.post('/disAgreeApply', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '请求成功';
+    calljson.arr = [];
+
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+
+        connection.query(company.getCompanyByUserId, [param.tZUserId], function (err, result) {
+            console.log(result, err)
+            connection.query(apply.updataApplyStatus, ['未通过', param.cYUserId, result[0].company_id], function (err, result) {
+
+                if (result) {
+                    responseJSON(res, calljson);
+                }
+            });
+        });
+    });
+
 });
 module.exports = router;
