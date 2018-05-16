@@ -15,7 +15,7 @@ export default class threeD extends wepy.page {
   }
   events = {};
   onLoad(option) {
-    this.webUrl = `file:///Users/didi/Documents/project/3D_PVRD_platform/threeD/baochun.html?${option.id}`
+    this.webUrl = `file:///Users/wangguoqing/Documents/wgq/3D/3D_PVRD_platform/threeD/baochun.html?${option.id}`
     this.$apply();
   }
 }

@@ -11,5 +11,6 @@
 	"appid": "wx71f0437822bcbbe4",
 	"projectname": "3d_pvrd_platform",
 	"miniprogramRoot": "./dist",
+	"libVersion": "1.9.94",
 	"condition": {}
 }

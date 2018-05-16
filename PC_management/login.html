@@ -96,14 +96,14 @@
   <script src="js/pages/readyLogin.js"></script>
   <script>$(function () { ReadyLogin.init(); });</script>
   <script>
-    
+
     function login() {
-      localStorage.nodeUrl="http://localhost:8888";
-      var data = { "data": { "user": { "userId": 9, "userName": "wajkqwd", "userPasswd": "123", "userWx": "123", "userType": "chuangye", "token": "b4b01652-2766-40e1-9a82-9a7fe37c15c4", "userIcon": "" }, "token": "b4b01652-2766-40e1-9a82-9a7fe37c15c4" }, "msg": "登录成功", "code": 200 }
-      localStorage.token = data.data.token;
-      localStorage.userId = data.data.user.userId;
-      localStorage.userName = data.data.user.userName;
-      localStorage.userType = data.data.user.userType;
+      localStorage.nodeUrl = "http://localhost:8888";
+      // var data = { "data": { "user": { "userId": 9, "userName": "wajkqwd", "userPasswd": "123", "userWx": "123", "userType": "chuangye", "token": "b4b01652-2766-40e1-9a82-9a7fe37c15c4", "userIcon": "" }, "token": "b4b01652-2766-40e1-9a82-9a7fe37c15c4" }, "msg": "登录成功", "code": 200 }
+      // localStorage.token = data.data.token;
+      // localStorage.userId = data.data.user.userId;
+      // localStorage.userName = data.data.user.userName;
+      // localStorage.userType = data.data.user.userType;
       var data = {
         "loginType": 1,
         "passwd": $("#password").val(),
@@ -114,7 +114,7 @@
       data = JSON.stringify(data)
       $.ajax({
         type: 'post',
-        url: 'http://192.168.43.232:8080/api/sessions',
+        url: 'http://localhost:8080/api/sessions',
         data: data,
         contentType: 'application/json',
         dataType: 'JSON',
@@ -124,7 +124,11 @@
           if (data.code == 200) {
             // localStorage.userData = data.data;
             alert(data.msg);
-            // window.location.href = "./index.html"
+            localStorage.token = data.data.token;
+            localStorage.userId = data.data.user.userId;
+            localStorage.userName = data.data.user.userName;
+            localStorage.userType = data.data.user.userType;
+            window.location.href = "./index.html"
             console.log("审核成功");
           } else {
             alert(data.msg);

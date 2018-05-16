@@ -188,7 +188,7 @@
                 <!-- END Form Validation Title -->
 
                 <!-- Form Validation Form -->
-                <form id="form-validation" action="http://192.168.43.232:8080/file/upload" method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
+                <form id="form-validation" action="http://localhost:8080/file/upload" method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
                   <div id="addcontent">
                     <div class="form-group">
                       <label class="col-md-3 control-label">公司名称
@@ -198,8 +198,8 @@
                         <input type="text" id="name" name="companyName" class="form-control" placeholder="请填写公司名称">
                       </div>
                     </div>
-                    <input type="text" id="name" name="companyType" class="form-control" placeholder="请填写公司名称" style="display: none" value="1">
-                    <input type="text" id="name" name="userId" class="form-control" placeholder="请填写公司名称" style="display: none" value="4">
+                    <input type="text" id="name" name="companyType" class="form-control companyType" placeholder="请填写公司名称" style="display: none">
+                    <input type="text" id="name" name="userId" class="form-control userId" placeholder="请填写公司名称" style="display: none">
                     <div class="form-group">
                       <label class="col-md-3 control-label">公司CEO
                         <span class="text-danger">*</span>
@@ -229,36 +229,36 @@
                         <span class="text-danger">*</span>
                       </label>
                       <div class="col-md-8">
-                        <label class="csscheckbox csscheckbox-primary enter" value="互联网">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="互联网">
                           <span></span> 互联网
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" value="科技">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="科技">
                           <span></span> 科技
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" value="金融">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="金融">
                           <span></span> 金融
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" value="图像">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="图像">
                           <span></span> 图像
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" value="电商">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="电商">
                           <span></span> 电商
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" value="投资">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="投资">
                           <span></span> 投资
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" value="游戏">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="游戏">
                           <span></span> 游戏
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" value="其它">
-                          <input type="checkbox" name="companyTags">
+                        <label class="csscheckbox csscheckbox-primary enter" >
+                          <input type="checkbox" name="companyTags" value="其它">
                           <span></span> 其它
                         </label>
                       </div>
@@ -455,7 +455,7 @@
       $(".status").show();
       $(".status").attr("href","processfortouzi.html")
     }
-
+    
     if(window.localStorage.length == 0){
       window.location.href = "login.html";
     }
@@ -463,6 +463,13 @@
       localStorage.clear();
       window.location.href = "login.html";
     });
+    if(localStorage.userType == 'chuangye'){
+      $(".companyType").val(1);
+    }else{
+      $(".companyType").val(2);
+    }
+    $(".userId").val(localStorage.userId);
+    
   </script>
   <script>
     function upload(element) {
