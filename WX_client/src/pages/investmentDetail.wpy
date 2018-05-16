@@ -53,7 +53,7 @@
 </style>
 <template>
   <scroll-view scroll-y class="container">
-    <image class="bacImg" src="{{javaServer}}{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
+    <image wx:if={{companyDetail.bookImg}} class="bacImg" src="{{javaServer}}{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
       <view class="zan-panel">
@@ -107,7 +107,7 @@ export default class InvestmentDetail extends wepy.page {
       });
     },
     apply() {
-      NetUtil.postJson("http://192.168.43.214:8888/server/ifApplyTouZi", {
+      NetUtil.postJson("http://localhost:8888/server/ifApplyTouZi", {
         applyUserId: this.$parent.globalData.userId,
         applyCompanyId: this.companyId
       }).then(data => {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinmiao.back.mapper.SubCommentMapper">
+  <resultMap id="BaseResultMap" type="com.xinmiao.back.domain.SubComment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="sub_comment_id" jdbcType="INTEGER" property="subCommentId" />
+    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="user_a_name" jdbcType="VARCHAR" property="userAName" />
+    <result column="user_b_name" jdbcType="VARCHAR" property="userBName" />
+    <result column="sub_comment_content" jdbcType="VARCHAR" property="subCommentContent" />
+    <result column="sub_comment_time" jdbcType="TIMESTAMP" property="subCommentTime" />
+    <result column="is_read" jdbcType="INTEGER" property="isRead" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    sub_comment_id, comment_id, user_a_name, user_b_name, sub_comment_content, sub_comment_time, 
+    is_read
+  </sql>
+</mapper>

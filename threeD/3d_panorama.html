@@ -94,26 +94,7 @@
 		<img src="./left.png" alt="back">
 	</div>
 	<div class="scene-bar">
-		<div id="scene-container">
-			<div class="one-scene" onclick="switchScene(1)">
-				<img src="./negz.jpg" alt="全景预览图">
-				<div class="scene-name">
-					<span>场景1</span>
-				</div>
-			</div>
-			<div class="one-scene" onclick="switchScene(2)">
-				<img src="./negx.jpg" alt="全景预览图">
-				<div class="scene-name">
-					<span>场景2</span>
-				</div>
-			</div>
-			<div class="one-scene" onclick="switchScene(3)">
-				<img src="./posz.jpg" alt="全景预览图">
-				<div class="scene-name">
-					<span>场景3</span>
-				</div>
-			</div>
-		</div>
+		
 	</div>
 	<script src="./three.min.js"></script>
 	<script src="./CSS3DRenderer.js"></script>
@@ -131,20 +112,19 @@
 		var lon = 90, lat = 0;
 		var phi = 0, theta = 0;
 		var touchX, touchY;
-		var javaServer = "http://192.168.43.214:8080";
+		var javaServer = "http://localhost:8080";
 		var sceneList = [];
 		var url = location.search; 
 		if (url.indexOf("?") != -1) {
 			var str = url.substr(1); //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串就是id
 			await $.ajax({
-				url: `${javaServer}/api/scenes?id=${}`,
+				url: `${javaServer}/api/scenes?id=${str}`,
 				success: function (data) {
 					console.log(data);
 					sceneList = data[0].imgList;
 				}
 			});
 		}
-		var img = ["./negx.jpg", "./negy.jpg", "./negz.jpg"];
 		init(1);
 		animate();
 
@@ -152,7 +132,7 @@
 			init(id);
 		}
 
-		async function init(id) {
+		function init(id) {
 			camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 			scene = new THREE.Scene();
 			

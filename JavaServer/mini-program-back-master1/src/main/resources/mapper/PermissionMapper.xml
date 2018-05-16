@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinmiao.back.mapper.PermissionMapper">
+    <resultMap id="BaseResultMap" type="com.xinmiao.back.domain.Permission">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
+        <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+        <result column="permission_url" jdbcType="VARCHAR" property="permissionUrl" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        permission_id, permission_name, permission_url
+    </sql>
+</mapper>

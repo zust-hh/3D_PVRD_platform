@@ -104,7 +104,7 @@
 </style>
 <template>
   <scroll-view scroll-y class="container">
-    <image class="bacImg" src="{{javaServer}}{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
+    <image wx:if={{companyDetail.bookImg}} class="bacImg" src="{{javaServer}}{{companyDetail.bookImg}}" @tap="show({{companyId}})"></image>
     <view class="backBtn zan-icon zan-icon-arrow" @tap="goBack"></view>
     <view class="detail">
       <view class="zan-panel">
@@ -192,7 +192,7 @@ export default class PioneerDetail extends wepy.page {
     },
     sendComment() {
       if (this.inputValue && !this.publisher) {
-        NetUtil.postJson("http://192.168.43.214:8888/server/submitComment", {
+        NetUtil.postJson("http://localhost:8888/server/submitComment", {
           commentUserId: this.$parent.globalData.userId,
           commentContent: this.inputValue,
           commentCompanyId: this.companyId
@@ -209,7 +209,7 @@ export default class PioneerDetail extends wepy.page {
           });
         });
       } else if (this.inputValue && this.publisher) {
-        NetUtil.postJson("http://192.168.43.214:8888/server/submitSubComment", {
+        NetUtil.postJson("http://localhost:8888/server/submitSubComment", {
           commentId: this.commentId,
           Aname: this.$parent.globalData.userInfo.nickName,
           Bname: this.publisher,

@@ -106,7 +106,7 @@ export default class ApplyDetail extends wepy.page {
       });
     },
     applys() {
-      NetUtil.postJson("http://192.168.43.214:8888/server/applyTouZi", {
+      NetUtil.postJson("http://localhost:8888/server/applyTouZi", {
         applyUserId: this.$parent.globalData.userId,
         applyCompanyId: this.companyId
       }).then(data => {

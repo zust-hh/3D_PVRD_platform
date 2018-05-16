@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinmiao.back.mapper.SceneMapper">
+  <resultMap id="BaseResultMap" type="com.xinmiao.back.domain.Scene">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="scene_id" jdbcType="INTEGER" property="sceneId" />
+    <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="scene_num" jdbcType="INTEGER" property="sceneNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    scene_id, scene_name, company_id, scene_num
+  </sql>
+</mapper>

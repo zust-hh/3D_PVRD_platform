@@ -128,8 +128,20 @@
             localStorage.userId = data.data.user.userId;
             localStorage.userName = data.data.user.userName;
             localStorage.userType = data.data.user.userType;
-            window.location.href = "./index.html"
-            console.log("审核成功");
+            $.ajax({
+              type: 'post',
+              url: localStorage.nodeUrl + '/server/selectInapplyById',
+              data: {
+                userId: localStorage.userId
+              },
+              dataType: 'JSON',
+              success: function (data) {
+                console.log(data);
+                localStorage.inApply = data.inApply;
+                window.location.href = "./index.html"
+              }
+            });
+            
           } else {
             alert(data.msg);
             console.log("审核失败");

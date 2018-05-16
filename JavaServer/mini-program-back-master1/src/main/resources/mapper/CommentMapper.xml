@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinmiao.back.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.xinmiao.back.domain.Comment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="comment_user_id" jdbcType="INTEGER" property="commentUserId" />
+    <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+    <result column="comment_company_id" jdbcType="INTEGER" property="commentCompanyId" />
+    <result column="coment_time" jdbcType="TIMESTAMP" property="comentTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    comment_id, comment_user_id, comment_content, comment_company_id, coment_time
+  </sql>
+</mapper>

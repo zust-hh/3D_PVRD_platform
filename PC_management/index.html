@@ -80,8 +80,8 @@
                   </a>
                 </li>
                 <li>
-                  <a href="enter.html">
-                    <i class="fa fa-rocket sidebar-nav-icon"></i>
+                  <a href="enter.html" class="inApply"> 
+                    <i class="fa fa-rocket sidebar-nav-icon" ></i>
                     <span class="sidebar-nav-mini-hide">入驻申请</span>
                   </a>
                 </li>
@@ -91,14 +91,14 @@
                     <span class="sidebar-nav-mini-hide">申请投资</span>
                   </a>
                 </li>
-                <li>
-                  <a href="audit.html">
+                <li class="adminPower">
+                  <a href="audit.html" class="adminPower">
                     <i class="gi gi-inbox sidebar-nav-icon"></i>
                     <span class="sidebar-nav-mini-hide">入驻申请审核</span>
                   </a>
                 </li>
-                <li>
-                  <a href="manage.html">
+                <li class="adminPower">
+                  <a href="manage.html" class="adminPower">
                     <i class="gi gi-parents sidebar-nav-icon"></i>
                     <span class="sidebar-nav-mini-hide">公司管理</span>
                   </a>
@@ -147,7 +147,7 @@
                         </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                   <li class="dropdown-header">
-                    <strong>XXX</strong>
+                    <strong class = "userNmae"></strong>
                   </li>
                   <li>
                     <a href="#" class="clear">
@@ -218,9 +218,23 @@
       $(".status").show();
       $(".status").attr("href","processfortouzi.html")
     }
+    //控制管理员权限
+    if(localStorage.userType == 'admin'){
+      console.log(1)
+      $(".adminPower").show();
+      $(".status").hide();
+      $(".inApply").hide();
+    }
+
+    //显示名字
+    $(".userNmae").text(localStorage.userName);
 
     if(window.localStorage.length == 0){
       window.location.href = "login.html";
+    }
+    //判断是否已入驻申请
+    if(localStorage.inApply==1){
+      $(".inApply").attr("href","checkenter.html")
     }
     $(".clear").click(function(){
       localStorage.clear();

@@ -221,6 +221,34 @@ router.post('/delectInapply', function (req, res, next) {
 
     });
 });
+//通过用户id查找申请入驻状态
+router.post('/selectInapplyById', function (req, res, next) {
+    var param = req.body;
+    var calljson = {};
+    calljson.code = 200;
+    calljson.msg = '请求成功';
+    calljson.arr = [];
+    // 从连接池获取连接 
+    pool.getConnection(function (err, connection) {
+
+        connection.query(apply.selectInapplyByUserId, [param.userId], function (err, result) {
+            // 释放连接
+            console.log(err, result);
+            if (result.length > 0) {
+                calljson.inApply = 1
+            } else {
+                calljson.inApply = 0
+            }
+            calljson.arr = result
+            responseJSON(res, calljson);
+            connection.release();
+
+            // connection.release();
+        });
+
+
+    });
+});
 //查询创业公司申请投资公司的申请列表
 router.post('/chuangYeSelectApply', function (req, res, next) {
     var param = req.body;
@@ -234,19 +262,27 @@ router.post('/chuangYeSelectApply', function (req, res, next) {
     pool.getConnection(function (err, connection) {
 
         connection.query(company.getCompanyByUserId, [param.userId], function (err, result) {
-
-            calljson.companyCeo = result[0].company_ceo;
-            calljson.companyName = result[0].company_name;
-            connection.query(apply.getTouZistatusByUserId, [param.userId], function (err, result) {
-                console.log(11, result, err)
-                if (result) {
-                    for (var i = 0; i < result.length; i++) {
-                        console.log(result.length)
-                        getCompany(result[i].apply_company_id, i, result.length, connection, result[i].apply_status);
+            if (result.length > 0) {
+                calljson.companyCeo = result[0].company_ceo;
+                calljson.companyName = result[0].company_name;
+                connection.query(apply.getTouZistatusByUserId, [param.userId], function (err, result) {
+                    console.log(11, result, err)
+                    if (result.length > 0) {
+                        for (var i = 0; i < result.length; i++) {
+                            console.log(result.length)
+                            getCompany(result[i].apply_company_id, i, result.length, connection, result[i].apply_status);
+                        }
+                    } else {
+                        responseJSON(res, calljson);
+                        connection.release();
                     }
-                }
 
-            });
+                });
+            } else {
+                responseJSON(res, calljson);
+                connection.release();
+            }
+
 
 
         });
@@ -279,18 +315,25 @@ router.post('/touZiSelectApply', function (req, res, next) {
     pool.getConnection(function (err, connection) {
 
         connection.query(company.getCompanyByUserId, [param.userId], function (err, result) {
-            connection.query(apply.getChuangYeByCompanyId, [result[0].company_id], function (err, result) {
-                console.log(result)
-                if (result.length > 0) {
-                    for (var i = 0; i < result.length; i++) {
-                        getCompany(result[i].apply_user_id, i, result.length, connection, result[i].apply_status);
+            console.log(result)
+            if (result) {
+                connection.query(apply.getChuangYeByCompanyId, [result[0].company_id], function (err, result) {
+                    console.log(result)
+                    if (result.length > 0) {
+                        for (var i = 0; i < result.length; i++) {
+                            getCompany(result[i].apply_user_id, i, result.length, connection, result[i].apply_status);
+                        }
+                    } else {
+                        responseJSON(res, calljson);
+                        connection.release();
                     }
-                } else {
-                    responseJSON(res, calljson);
-                    connection.release();
-                }
 
-            });
+                });
+            } else {
+                responseJSON(res, calljson);
+                connection.release();
+            }
+
 
 
         });
@@ -410,10 +453,10 @@ router.post('/submitComment', function (req, res, next) {
         // 建立连接 增加一个用户信息 
         var time = new Date()
         connection.query(commentsql.submitComment, [param.commentUserId, param.commentContent, param.commentCompanyId, time], function (err, result) {
-            if(result){
+            if (result) {
                 responseJSON(res, calljson);
             }
-            
+
             connection.release();
 
         });
@@ -432,14 +475,14 @@ router.post('/submitSubComment', function (req, res, next) {
     // 从连接池获取连接 
     pool.getConnection(function (err, connection) {
         // 建立连接 增加一个用户信息 
-        connection.query(commentsql.submitSubComment, [param.commentId, param.Aname, param.Bname, param.subCommentContent,time], function (err, result) {
+        connection.query(commentsql.submitSubComment, [param.commentId, param.Aname, param.Bname, param.subCommentContent, time], function (err, result) {
             console.log(result);
-            if(result){
+            if (result) {
                 responseJSON(res, calljson);
-            }else{
+            } else {
                 console.log(err);
             }
-            
+
             connection.release();
 
         });
@@ -460,12 +503,12 @@ router.post('/applyTouZi', function (req, res, next) {
         // 建立连接 增加一个用户信息 
         connection.query(apply.insertApplyTouZi, [param.applyUserId, param.applyCompanyId], function (err, result) {
             console.log(result);
-            if(result){
+            if (result) {
                 responseJSON(res, calljson);
-            }else{
+            } else {
                 console.log(err);
             }
-            
+
             connection.release();
 
         });
@@ -485,15 +528,15 @@ router.post('/ifApplyTouZi', function (req, res, next) {
         // 建立连接 增加一个用户信息 
         connection.query(apply.selectIfApplyTouZi, [param.applyUserId, param.applyCompanyId], function (err, result) {
             console.log(result);
-            if(result){
+            if (result) {
                 calljson.application = '已申请'
                 responseJSON(res, calljson);
-            }else if(result.length == 0){
+            } else if (result.length == 0) {
                 calljson.application = '未申请'
                 console.log(calljson)
                 responseJSON(res, calljson);
             }
-            
+
             connection.release();
 
         });

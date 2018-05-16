@@ -94,14 +94,14 @@
                   <span class="sidebar-nav-mini-hide">申请投资</span>
                 </a>
               </li>
-              <li>
-                <a href="audit.html">
+              <li class="adminPower">
+                <a href="audit.html" class="adminPower">
                   <i class="gi gi-inbox sidebar-nav-icon"></i>
                   <span class="sidebar-nav-mini-hide">入驻申请审核</span>
                 </a>
               </li>
-              <li>
-                <a href="manage.html">
+              <li class="adminPower">
+                <a href="manage.html" class="adminPower">
                   <i class="gi gi-parents sidebar-nav-icon"></i>
                   <span class="sidebar-nav-mini-hide">公司管理</span>
                 </a>
@@ -150,7 +150,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
                 <li class="dropdown-header">
-                  <strong>XXX</strong>
+                  <strong class="userNmae"></strong>
                 </li>
                 <li>
                   <a href="#" class="clear">
@@ -188,7 +188,8 @@
                 <!-- END Form Validation Title -->
 
                 <!-- Form Validation Form -->
-                <form id="form-validation" action="http://localhost:8080/file/upload" method="post" class="form-horizontal form-bordered" enctype="multipart/form-data">
+                <form id="form-validation" action="http://localhost:8080/file/upload" method="post" class="form-horizontal form-bordered"
+                  enctype="multipart/form-data">
                   <div id="addcontent">
                     <div class="form-group">
                       <label class="col-md-3 control-label">公司名称
@@ -229,35 +230,35 @@
                         <span class="text-danger">*</span>
                       </label>
                       <div class="col-md-8">
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="互联网">
                           <span></span> 互联网
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="科技">
                           <span></span> 科技
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="金融">
                           <span></span> 金融
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="图像">
                           <span></span> 图像
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="电商">
                           <span></span> 电商
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="投资">
                           <span></span> 投资
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="游戏">
                           <span></span> 游戏
                         </label>
-                        <label class="csscheckbox csscheckbox-primary enter" >
+                        <label class="csscheckbox csscheckbox-primary enter">
                           <input type="checkbox" name="companyTags" value="其它">
                           <span></span> 其它
                         </label>
@@ -448,28 +449,33 @@
   <!-- <script>$(function () { ReadyDashboard.init(); });</script> -->
   <script>
     //控制申请投资页面的显示
-    if(localStorage.userType == 'chuangye'){
+    if (localStorage.userType == 'chuangye') {
       $(".status").show();
-      $(".status").attr("href","processforchuangye.html")
-    }else if(localStorage.userType == 'touzi'){
+      $(".status").attr("href", "processforchuangye.html")
+    } else if (localStorage.userType == 'touzi') {
       $(".status").show();
-      $(".status").attr("href","processfortouzi.html")
+      $(".status").attr("href", "processfortouzi.html")
     }
-    
-    if(window.localStorage.length == 0){
+    //控制管理员权限
+    if (localStorage.userType == 'admin') {
+      $(".adminPower").show();
+    }
+    //显示名字
+    $(".userNmae").text(localStorage.userName);
+    if (window.localStorage.length == 0) {
       window.location.href = "login.html";
     }
-    $(".clear").click(function(){
+    $(".clear").click(function () {
       localStorage.clear();
       window.location.href = "login.html";
     });
-    if(localStorage.userType == 'chuangye'){
+    if (localStorage.userType == 'chuangye') {
       $(".companyType").val(1);
-    }else{
+    } else {
       $(".companyType").val(2);
     }
     $(".userId").val(localStorage.userId);
-    
+
   </script>
   <script>
     function upload(element) {

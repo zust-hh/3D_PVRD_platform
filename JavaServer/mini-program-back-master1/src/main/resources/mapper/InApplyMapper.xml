@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinmiao.back.mapper.InApplyMapper">
+  <resultMap id="BaseResultMap" type="com.xinmiao.back.domain.InApply">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="in_apply_id" jdbcType="INTEGER" property="inApplyId" />
+    <result column="in_apply_user_id" jdbcType="INTEGER" property="inApplyUserId" />
+    <result column="in_apply_status" jdbcType="VARCHAR" property="inApplyStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    in_apply_id, in_apply_user_id, in_apply_status
+  </sql>
+</mapper>

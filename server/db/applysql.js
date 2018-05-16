@@ -8,6 +8,8 @@ var applysql = {
     getInapplyByOverStatus:'SELECT * FROM in_apply where in_apply_status = ? OR in_apply_status = ?',
     //删除申请入驻的公司
     delectInapplyByUserId:'DELETE FROM in_apply where in_apply_user_id = ?',
+    //通过用户id查找申请入驻的公司的申请状态
+    selectInapplyByUserId:'SELECT * FROM in_apply where in_apply_user_id = ?',
 
 
   //申请投资机构查询

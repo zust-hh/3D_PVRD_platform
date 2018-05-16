@@ -74,13 +74,13 @@
                 </a>
               </li>
               <li>
-                <a href="enter.html">
+                <a href="enter.html" class="inApply">
                   <i class="fa fa-rocket sidebar-nav-icon"></i>
                   <span class="sidebar-nav-mini-hide">入驻申请</span>
                 </a>
               </li>
               <li>
-                <a href="processforchuangye.html">
+                <a href="processforchuangye.html" class="status">
                   <i class="gi gi-more_items sidebar-nav-icon"></i>
                   <span class="sidebar-nav-mini-hide">申请投资</span>
                 </a>
@@ -141,7 +141,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
                 <li class="dropdown-header">
-                  <strong>XXX</strong>
+                  <strong class="userNmae"></strong>
                 </li>
                 <li>
                   <a href="#" class="clear">
@@ -265,7 +265,14 @@
       localStorage.clear();
       window.location.href = "login.html";
     });
-
+    //控制管理员权限
+    if(localStorage.userType == 'admin'){
+      
+      $(".status").hide();
+      $(".inApply").hide();
+    }
+    //显示名字
+    $(".userNmae").text(localStorage.userName);
 
     $.ajax({
       type: 'Post',

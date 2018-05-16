@@ -138,7 +138,7 @@ export default class Talk extends wepy.page {
     },
     sendTalk() {
       if (this.inputValue && !this.publisher) {
-        NetUtil.postJson("http://192.168.43.214:8888/server/submitComment", {
+        NetUtil.postJson("http://localhost:8888/server/submitComment", {
           commentUserId: this.$parent.globalData.userId,
           commentContent: this.inputValue,
           commentCompanyId: 0
@@ -155,7 +155,7 @@ export default class Talk extends wepy.page {
           });
         });
       } else if (this.inputValue && this.publisher) {
-        NetUtil.postJson("http://192.168.43.214:8888/server/submitSubComment", {
+        NetUtil.postJson("http://localhost:8888/server/submitSubComment", {
           commentId: this.commentId,
           Aname: this.$parent.globalData.userInfo.nickName,
           Bname: this.publisher,

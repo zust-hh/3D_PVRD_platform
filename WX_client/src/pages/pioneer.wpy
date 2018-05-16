@@ -1,56 +1,62 @@
 <style lang="scss">
-
 </style>
 <template>
   <scroll-view scroll-y style="height:100%">
     <repeat for="{{list}}" key="index" index="index" item="item" wx:if="{{list}}">
-        <OneCard :type="type" :id="item.companyId" :backgroundImage="item.bookImg" :companyName="item.companyName" :involvingIndustry="item.companyTags" />
+      <OneCard :type="type" :id="item.companyId" :backgroundImage="item.bookImg" :companyName="item.companyName" :involvingIndustry="item.companyTags"
+      />
     </repeat>
     <zanToast></zanToast>
   </scroll-view>
 </template>
 
 <script>
-import wepy from "wepy";
-import OneCard from "../components/oneCard";
-import NetUtil from "../util/netUtil";
-import javaServer from "../config";
-import zanToast from '../ui/components/zan-toast'
+  import wepy from "wepy";
+  import OneCard from "../components/oneCard";
+  import NetUtil from "../util/netUtil";
+  import javaServer from "../config";
+  import zanToast from '../ui/components/zan-toast'
 
-export default class Pioneer extends wepy.page {
-  components = {
-    OneCard,
-    zanToast
-  };
-  data = {
-    type: "pioneer",
-    list: []
-  };
-  methods = {};
-  events = {};
-  onLoad() {
-    if(this.list !== []) {
-      this.$invoke('zanToast', 'showZanToast', { title: '加载中。。。', timeout: 1000 });
-    }
-    NetUtil.getJson(`${javaServer}/api/pioneer/getPioneerList`).then(data => {
-      this.list = data.data;
-      this.$apply();
-    });
-    wx.getUserInfo({
-      success: res => {
-        this.$parent.globalData.userInfo = res.userInfo;
-        NetUtil.postJson(`${javaServer}/api/sessions`, {
-          loginType: 1,
-          passwd: "",
-          telephoneNumber: this.$parent.globalData.userInfo.nickName,
-          userIcon: this.$parent.globalData.userInfo.avatarUrl
-        }).then(data => {
-          this.$parent.globalData.userType = data.data.data.user.userType;
-          this.$parent.globalData.token = data.data.data.token;
-          this.$parent.globalData.userId = data.data.data.user.userId;
-        });
+  export default class Pioneer extends wepy.page {
+    components = {
+      OneCard,
+      zanToast
+    };
+    data = {
+      type: "pioneer",
+      list: [],
+    };
+    events = {};
+    onLoad() {
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+            wx.getUserInfo({
+              success: res => {
+                this.$parent.globalData.userInfo = res.userInfo;
+                NetUtil.postJson(`${javaServer}/api/sessions`, {
+                  loginType: 1,
+                  passwd: "",
+                  telephoneNumber: this.$parent.globalData.userInfo.nickName,
+                  userIcon: this.$parent.globalData.userInfo.avatarUrl
+                }).then(data => {
+                  this.$parent.globalData.userType = data.data.data.user.userType;
+                  this.$parent.globalData.token = data.data.data.token;
+                  this.$parent.globalData.userId = data.data.data.user.userId;
+                });
+              }
+            })
+          }
+        }
+      })
+      if (this.list !== []) {
+        this.$invoke('zanToast', 'showZanToast', { title: '加载中。。。', timeout: 1000 });
       }
-    });
+      NetUtil.getJson(`${javaServer}/api/pioneer/getPioneerList`).then(data => {
+        this.list = data.data;
+        this.$apply();
+      });
+    }
   }
-}
 </script>

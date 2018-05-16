@@ -3900,3 +3900,6 @@ p, .table, .alert, .carousel {
 .status {
     display: none;
 }
+.adminPower{
+    display: none;
+}

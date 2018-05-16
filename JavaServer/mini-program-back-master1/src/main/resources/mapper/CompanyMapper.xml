@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinmiao.back.mapper.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.xinmiao.back.domain.Company">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="company_description" jdbcType="VARCHAR" property="companyDescription" />
+    <result column="company_address" jdbcType="VARCHAR" property="companyAddress" />
+    <result column="company_tags" jdbcType="VARCHAR" property="companyTags" />
+    <result column="book_img" jdbcType="VARCHAR" property="bookImg" />
+    <result column="company_ceo" jdbcType="VARCHAR" property="companyCeo" />
+    <result column="company_url" jdbcType="VARCHAR" property="companyUrl" />
+    <result column="company_type" jdbcType="INTEGER" property="companyType" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    company_id, company_name, company_description, company_address, company_tags, book_img, 
+    company_ceo, company_url, company_type, user_id
+  </sql>
+</mapper>

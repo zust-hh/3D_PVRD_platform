@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinmiao.back.mapper.ApplyMapper">
+  <resultMap id="BaseResultMap" type="com.xinmiao.back.domain.Apply">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="apply_id" jdbcType="INTEGER" property="applyId" />
+    <result column="apply_user" jdbcType="INTEGER" property="applyUser" />
+    <result column="apply_company_id" jdbcType="VARCHAR" property="applyCompanyId" />
+    <result column="apply_status" jdbcType="VARCHAR" property="applyStatus" />
+    <result column="is_read" jdbcType="INTEGER" property="isRead" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    apply_id, apply_user, apply_company_id, apply_status, is_read
+  </sql>
+</mapper>
