@@ -6,9 +6,21 @@ PC_management: 后台管理代码
 
 WX_client: WX小程序端代码
 
-server: node后台代码
+server: node后台代码（主要分管get请求）
+
+JavaServer: java后台代码（主要分管用户及post请求）
+
+sql: mysql 数据库文件
 
 ## PC_management
+
+### bootstrap
+
+pc web端UI框架
+
+### jquery
+
+pc web端javaScript框架
 
 ## WX_client
 
@@ -26,22 +38,14 @@ wepy build --watch
 
 微信小程序端UI组件采用wepy-zanui组件库
 
-## 接口联调
+## server
 
-1. 获取创业公司列表  完成
-2. 获取创业公司详情  完成
-3. 获取公司全景图  完成(待联调)
-4. 获取投资公司列表  完成
-5. 获取投资机构详情  完成
-6. 申请投资  完成
-7. 获取聊一聊评论列表  完成
-8. 发表评论  完成
-9. 获取个人中心信息  完成
-10. 获取个人中心投资申请  完成
-11. 微信端登陆/注册  完成
-12. pc端登陆/注册  完成
-13. 入驻申请  完成
-14. 入驻审批  完成
-15. 申请投资审批  完成
-16. 判断是否在申请该投资机构  完成
-17. 公司列表管理  完成
+### express
+
+node服务端框架
+
+## JavaServer
+
+### spring boot
+
+java服务端框架
